@@ -14,17 +14,14 @@ type ContratoInteligente struct {
 
 //Para saber a scruct que está sendo utilizada, por favor, veja no pacote Entidades
 
-type ResultadoConsulta struct {
-	Chave string `json:"chave"`
-	Ativo *Notificacao
-}
+
 
 func (c *ContratoInteligente) InitLedger(contexto contractapi.TransactionContextInterface) error {
 	//método inicial. Normalmente para inserir ativos de testes
 
 	return nil
 }
-
+//Cria notificação 
 func (c *ContratoInteligente) CriarNotificacao(contexto contractapi.TransactionContextInterface, notificacao string) error {
 
 	notificacaoEmBytes := []byte(notificacao)
@@ -96,9 +93,9 @@ func (c *ContratoInteligente) ObterTodasNotificacoes(contexto contractapi.Transa
 		}
 
 		notificacao := new(Notificacao)
-		_ = json.Unmarshal(queryResponse.Value, notificacao)
+		_ = json.Unmarshal(queryResponse.Value, &notificacao)
 
-		queryResult := ResultadoConsulta{Chave: queryResponse.Key, Ativo: notificacao}
+		queryResult := ResultadoConsulta{Chave: queryResponse.Chave, Ativo: notificacao}
 		results = append(results, &queryResult)
 	}
 
