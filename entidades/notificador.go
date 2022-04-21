@@ -4,7 +4,7 @@ type Notificador struct {
 	Id             int    `json:"id"`
 	Email          string `json:"email"`
 	Cpf            string `json:"cpf"`
-	DataNascimento int    `json:"dataNascimento"`
+	DataNascimento string `json:"dataNascimento"`
 	Nome           string `json:"nome"`
 	NomeDaMae      string `json:"nomeDaMae"`
 	Estado         string `json:"estado"`
