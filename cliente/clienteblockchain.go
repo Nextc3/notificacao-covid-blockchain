@@ -1,6 +1,6 @@
 package cliente
 
 type ClienteBlockchain struct {
-	Conexao  Conexao
-	Contrato Contrato
+	Conexao  *Conexao
+	Contrato *Contrato
 }

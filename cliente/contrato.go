@@ -3,10 +3,11 @@ package cliente
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/Nextc3/notificacao-covid-blockchain/consulta"
-	"github.com/Nextc3/notificacao-covid-blockchain/entidade"
 	"log"
 	"strconv"
+
+	"github.com/Nextc3/notificacao-covid-blockchain/consulta"
+	"github.com/Nextc3/notificacao-covid-blockchain/entidade"
 
 	"github.com/hyperledger/fabric-sdk-go/pkg/gateway"
 )
@@ -15,7 +16,7 @@ type Contrato struct {
 	contrato *gateway.Contract
 }
 
-func (c *Contrato) setContrato(g *gateway.Contract) {
+func (c *Contrato) SetContrato(g *gateway.Contract) {
 	c.contrato = g
 }
 
@@ -95,7 +96,7 @@ func (c *Contrato) ObterTodasNotificacoes(registrar bool) ([]*consulta.Resultado
 	return result, nil
 
 }
-func (c *Contrato) initLedger() {
+func (c *Contrato) InitLedger() {
 	contract := c.contrato
 	log.Println("--> Transação de Submit: InitLedger, função cria o conjunto inicial de ativos no razão. Para estudo")
 	_, err := contract.SubmitTransaction("initLedger")
