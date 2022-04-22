@@ -4,22 +4,28 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fb348a41-07d3-4f07-ba2d-2c347370ebcc" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/entidades/contatomonitorado.go" beforeDir="false" afterPath="$PROJECT_DIR$/entidade/contatomonitorado.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/entidades/go.mod" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/entidades/notificacao.go" beforeDir="false" afterPath="$PROJECT_DIR$/entidade/notificacao.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/entidades/notificador.go" beforeDir="false" afterPath="$PROJECT_DIR$/entidade/notificador.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/entidades/testecovid.go" beforeDir="false" afterPath="$PROJECT_DIR$/entidade/testecovid.go" afterDir="false" />
+    <list default="true" id="fb348a41-07d3-4f07-ba2d-2c347370ebcc" name="Changes" comment="alterações de correção de pacotes">
+      <change afterPath="$PROJECT_DIR$/cliente/clienteblockchain.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chaincode/contratointeligente.go" beforeDir="false" afterPath="$PROJECT_DIR$/chaincode/contratointeligente.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cliente/contrato.go" beforeDir="false" afterPath="$PROJECT_DIR$/cliente/contrato.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/consulta/resultadoconsulta.go" beforeDir="false" afterPath="$PROJECT_DIR$/consulta/resultadoconsulta.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/implementacaoservicos/servicoblockchain.go" beforeDir="false" afterPath="$PROJECT_DIR$/implementacaoservicos/servicoblockchain.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/interfaceservicos/interfaceservico.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/teste.go" beforeDir="false" afterPath="$PROJECT_DIR$/teste.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/implementacaoservicos/servicoblockchain.go" beforeDir="false" afterPath="$PROJECT_DIR$/implementacaoservico/servicoblockchain.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/interfaceservicos/iservico.go" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Go File" />
+      </list>
+    </option>
   </component>
   <component name="GOROOT" url="file://$PROJECT_DIR$/../../../../../../../Program Files/Go" />
   <component name="Git.Settings">
@@ -37,6 +43,7 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="DefaultGoTemplateProperty" value="Go File" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
@@ -88,7 +95,22 @@
       </map>
     </option>
   </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="alterações de correção de pacotes" />
+    <option name="LAST_COMMIT_MESSAGE" value="alterações de correção de pacotes" />
+  </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/interfaceservico/iservico.go</url>
+          <line>2</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

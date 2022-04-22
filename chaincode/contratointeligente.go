@@ -3,6 +3,8 @@ package chaincode
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/Nextc3/notificacao-covid-blockchain/consulta"
+	"github.com/Nextc3/notificacao-covid-blockchain/entidade"
 	"strconv"
 
 	"github.com/hyperledger/fabric-contract-api-go/contractapi"
@@ -14,18 +16,17 @@ type ContratoInteligente struct {
 
 //Para saber a scruct que está sendo utilizada, por favor, veja no pacote Entidades
 
-
-
 func (c *ContratoInteligente) InitLedger(contexto contractapi.TransactionContextInterface) error {
 	//método inicial. Normalmente para inserir ativos de testes
 
 	return nil
 }
-//Cria notificação 
+
+//Cria notificação
 func (c *ContratoInteligente) CriarNotificacao(contexto contractapi.TransactionContextInterface, notificacao string) error {
 
 	notificacaoEmBytes := []byte(notificacao)
-	var n Notificacao
+	var n entidade.Notificacao
 	_ = json.Unmarshal(notificacaoEmBytes, &n)
 
 	//Chave do estado é Notificacao + Id da notificacao
@@ -34,7 +35,7 @@ func (c *ContratoInteligente) CriarNotificacao(contexto contractapi.TransactionC
 }
 
 //retorna uma notificacao
-func (c *ContratoInteligente) ConsultarNotificacao(contexto contractapi.TransactionContextInterface, idNotificacao string) (*Notificacao, error) {
+func (c *ContratoInteligente) ConsultarNotificacao(contexto contractapi.TransactionContextInterface, idNotificacao string) (*entidade.Notificacao, error) {
 	notificacaoEmBytes, err := contexto.GetStub().GetState("Notificacao" + idNotificacao)
 
 	if err != nil {
@@ -45,7 +46,7 @@ func (c *ContratoInteligente) ConsultarNotificacao(contexto contractapi.Transact
 		return nil, fmt.Errorf("Notificacao%s não existe", idNotificacao)
 	}
 
-	notificacao := new(Notificacao)
+	notificacao := new(entidade.Notificacao)
 	_ = json.Unmarshal(notificacaoEmBytes, notificacao)
 
 	return notificacao, nil
@@ -60,7 +61,7 @@ func (s *ContratoInteligente) ExisteNotificacao(contexto contractapi.Transaction
 
 	return notificacaoEmBytes != nil, nil
 }
-func (c *ContratoInteligente) ObterTodasNotificacoes(contexto contractapi.TransactionContextInterface) ([]*ResultadoConsulta, error) {
+func (c *ContratoInteligente) ObterTodasNotificacoes(contexto contractapi.TransactionContextInterface) ([]*consulta.ResultadoConsulta, error) {
 	startKey := ""
 	endKey := ""
 	// GetStateByRange retorna um iterador de intervalo sobre um conjunto de chaves no
@@ -83,7 +84,7 @@ func (c *ContratoInteligente) ObterTodasNotificacoes(contexto contractapi.Transa
 	}
 	defer resultadoIteracao.Close()
 
-	results := []*ResultadoConsulta{}
+	results := []*consulta.ResultadoConsulta{}
 
 	for resultadoIteracao.HasNext() {
 		queryResponse, err := resultadoIteracao.Next()
@@ -92,10 +93,10 @@ func (c *ContratoInteligente) ObterTodasNotificacoes(contexto contractapi.Transa
 			return nil, err
 		}
 
-		notificacao := new(Notificacao)
+		notificacao := new(entidade.Notificacao)
 		_ = json.Unmarshal(queryResponse.Value, &notificacao)
 
-		queryResult := ResultadoConsulta{Chave: queryResponse.Chave, Ativo: notificacao}
+		queryResult := consulta.ResultadoConsulta{Chave: queryResponse.Key, Ativo: notificacao}
 		results = append(results, &queryResult)
 	}
 

@@ -3,6 +3,8 @@ package cliente
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/Nextc3/notificacao-covid-blockchain/consulta"
+	"github.com/Nextc3/notificacao-covid-blockchain/entidade"
 	"log"
 	"strconv"
 
@@ -17,23 +19,12 @@ func (c *Contrato) setContrato(g *gateway.Contract) {
 	c.contrato = g
 }
 
-/*
-//Alterar Notificacao está fora do escopo do trabalho e do objetivo do blockchain, mas caso seja
-necessário deixei esse atualização e remoção da notificações da blockchain
-func (c *Contrato) atualizarNotificacao(id string, novaPessoa string) {
-	log.Println("--> Transação de Submit: ChangeOiPessoa OI1, transfere para um novo dono Val Bandeira")
-	contract := c.contrato
-	_, err := contract.SubmitTransaction("ChangeOiPessoa", id, novaPessoa)
-	if err != nil {
-		log.Fatalf("Falhou em ChangeOiPessoa Transação de Submit: %v", err)
-	}
-}
-
-*/
-func (c *Contrato) CriarNotificacao(n *Notificacao) {
+// CriarNotificacao /*
+//CriarNotificacao transforma em um JSON e depois em uma String e envia com SubmitTransaction
+func (c *Contrato) CriarNotificacao(n *entidade.Notificacao) {
 	log.Println("--> Transação de Submit: CriarNotificacao, cria ativos do tipo Notificacao")
 	contract := c.contrato
-	nEmBytes,_ := json.Marshal(n)
+	nEmBytes, _ := json.Marshal(n)
 	nString := string(nEmBytes)
 	result, err := contract.SubmitTransaction("criarNotificacao", nString)
 	if err != nil {
@@ -42,7 +33,7 @@ func (c *Contrato) CriarNotificacao(n *Notificacao) {
 	log.Println(string(result))
 }
 func (c *Contrato) ExisteNotificacao(registrar bool, id int) string {
-	//a variável registrar diz se quero registrar na ledger a consulta 
+	//a variável registrar diz se quero registrar na ledger a consulta
 	idString := strconv.Itoa(id)
 	contrato := c.contrato
 	var result []byte
@@ -50,9 +41,9 @@ func (c *Contrato) ExisteNotificacao(registrar bool, id int) string {
 	log.Println("--> Transação Evaluate e Submit: ExisteNotificacao, função que retorna um boleano se achou o ativo na ledger")
 
 	if registrar {
-		
+
 		log.Println("Registrando transação de existeNotificacao na ledger")
-		
+
 		result, err = contrato.SubmitTransaction("existeNotificacao", idString)
 	} else {
 		log.Println("NÃO registrando transação de existeNotificacao na ledger")
@@ -65,10 +56,10 @@ func (c *Contrato) ExisteNotificacao(registrar bool, id int) string {
 	}
 	return string(result)
 }
-func (c *Contrato) ConsultarNotificacao(registrar bool, id int) *Notificacao {
+func (c *Contrato) ConsultarNotificacao(registrar bool, id int) (*entidade.Notificacao, error) {
 
 	log.Println("--> Transação ConsultarNotificacao, função retorna um ativo")
-	var n *Notificacao
+	var n *entidade.Notificacao
 	var err error
 	idString := strconv.Itoa(id)
 	contract := c.contrato
@@ -83,25 +74,25 @@ func (c *Contrato) ConsultarNotificacao(registrar bool, id int) *Notificacao {
 	if err != nil {
 		log.Fatalf("Falhou em Transação consultarNotificacao : %v\n", err)
 	}
-	return n
+	return n, err
 }
-func (c *Contrato) ObterTodasNotificacoes(registrar bool) ([]*ResultadoConsulta, error) {
-	
-		contract := c.contrato
-		log.Println("--> Transação ObterTodasNotificacoes, função que retorna todos os ativos na ledger")
-		var result []*ResultadoConsulta
-		var err error
-		if registrar {
-			result, err = contract.SubmitTransaction("obterTodasNotificacoes")
-		} else {
-			result, err = contract.EvaluateTransaction("obterTodasNotificacoes")
-		}
-	
-		if err != nil {
-			log.Fatalf("Falhou a getTodosOis transação: %v", err)
-		}
+func (c *Contrato) ObterTodasNotificacoes(registrar bool) ([]*consulta.ResultadoConsulta, error) {
 
-		return result,nil 
+	contract := c.contrato
+	log.Println("--> Transação ObterTodasNotificacoes, função que retorna todos os ativos na ledger")
+	var result []*consulta.ResultadoConsulta
+	var err error
+	if registrar {
+		result, err = contract.SubmitTransaction("obterTodasNotificacoes")
+	} else {
+		result, err = contract.EvaluateTransaction("obterTodasNotificacoes")
+	}
+
+	if err != nil {
+		log.Fatalf("Falhou a getTodosOis transação: %v", err)
+	}
+
+	return result, nil
 
 }
 func (c *Contrato) initLedger() {
@@ -113,7 +104,8 @@ func (c *Contrato) initLedger() {
 		log.Fatalf("Falhou em InitLedger SUBMIT (altera estado da ledger) %v", err)
 	}
 }
-//Funções de configuração 
+
+//Funções de configuração
 
 /* main
 log.Println("============ minha primeira aplicação em golang ============")
@@ -129,8 +121,5 @@ log.Println("============ minha primeira aplicação em golang ============")
 		Despedida: despedida,
 		Oidenovo:  oidenovo,
 		Pessoa:	pessoa
-	*/
-	//log.Println("============ fim da minha primeira aplicação em golang ============")
-
 */
-
+//log.Println("============ fim da minha primeira aplicação em golang ============")
