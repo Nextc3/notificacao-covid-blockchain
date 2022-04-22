@@ -1,7 +1,5 @@
 package implementacaoservicos
 
-
-
 /*
 
 type InterfaceServico struct {
@@ -19,13 +17,10 @@ type Servico struct {
 func NewServico(c *ClienteBlockchain) *Servico {
 	return &Servico{
 		Cliente: c,
-
 	}
 }
 
-func (s *Servico) ObterTodos()([]*Notificacao, error) {
+func (s *Servico) ObterTodos() ([]*Notificacao, error) {
 	var result []*Notificacao
-
-	
 
 }

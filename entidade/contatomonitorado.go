@@ -1,4 +1,4 @@
-package entidades
+package entidade
 
 type ContatoNonitorado struct {
 	Id                int                 `json:"id"`

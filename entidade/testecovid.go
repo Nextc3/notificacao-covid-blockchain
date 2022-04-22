@@ -1,4 +1,4 @@
-package entidades
+package entidade
 
 type TesteCovid struct {
 	Id            int               `json:"id"`

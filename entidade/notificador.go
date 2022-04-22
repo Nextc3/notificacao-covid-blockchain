@@ -1,4 +1,4 @@
-package entidades
+package entidade
 
 type Notificador struct {
 	Id             int    `json:"id"`
