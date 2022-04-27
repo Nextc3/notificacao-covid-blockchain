@@ -2,7 +2,7 @@ package handlers
 
 import (
 	"github.com/Nextc3/notificacao-covid-blockchain/interfaceservico"
-	"github.com/codegangsta/negroni"
+	"github.com/urfave/negroni"
 	"github.com/gorilla/mux"
 )
 
