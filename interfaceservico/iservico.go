@@ -6,6 +6,6 @@ import (
 
 type Iservico interface {
 	ObterTodos() ([]*entidade.Notificacao, error)
-	Obter(Id int) (*entidade.Notificacao, error)
+	Obter(id int) (*entidade.Notificacao, error)
 	Salvar(n *entidade.Notificacao) error
 }
