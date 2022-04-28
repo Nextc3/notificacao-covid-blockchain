@@ -12,7 +12,7 @@ import (
 
 type InterfaceServico struct {
 	ObterTodos () ([]*Notificacao, error)
-	Obter(Id int) (*Notificacao, error)
+	Obter(id int) (*Notificacao, error)
 	Salvar(n *Notificacao) error
 }
 
@@ -47,11 +47,11 @@ func (s *Servico) ObterTodos() ([]*entidade.Notificacao, error) {
 	return ns, nil
 
 }
-func (s *Servico) Obter(Id int) (*entidade.Notificacao, error) {
+func (s *Servico) Obter(id int) (*entidade.Notificacao, error) {
 	log.Println("Obtendo Notificação")
 	var n *entidade.Notificacao
 
-	n, err := s.Cliente.Contrato.ConsultarNotificacao(true, Id)
+	n, err := s.Cliente.Contrato.ConsultarNotificacao(true, id)
 	if err != nil {
 		log.Println("Erro em obter Notificação")
 		return nil, err
