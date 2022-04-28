@@ -76,6 +76,7 @@ func getGateway(caminho string, wallet *gateway.Wallet) *gateway.Gateway {
 func getCaminhoConexaoOrg1Yaml() string {
 	caminho := filepath.Join(
 		"..",
+		"..",
 		"test-network",
 		"organizations",
 		"peerOrganizations",

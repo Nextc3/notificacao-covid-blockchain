@@ -32,13 +32,13 @@ rm -rf wallet/*
 rm -rf gateway/*
 
 # launch network; create channel and join peer to channel
-pushd ../test-network
+pushd ../../test-network
 ./inicializarRede.sh
 ./ativandoChaincode.sh
-#./meuNetwork.sh deployCC -ccn contratointeligente -ccv 1 -cci initLedger -ccl ${CC_SRC_LANGUAGE} -ccp ${CC_SRC_PATH}
+#./meuNetwork.sh deployCC -ccn contratointeligente  -ccv 1 -cci initLedger -ccl ${CC_SRC_LANGUAGE} -ccp ${CC_SRC_PATH}
 popd
 
-go run web/main.go
+go run contratointeligente.go
 #Executando minha rede 
 #./inicializarRede.sh
 
