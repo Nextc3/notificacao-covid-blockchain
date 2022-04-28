@@ -4,8 +4,7 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fb348a41-07d3-4f07-ba2d-2c347370ebcc" name="Changes" comment="alterações de correção de pacotes">
-      <change afterPath="$PROJECT_DIR$/web/handlers/Notificacao.go" afterDir="false" />
+    <list default="true" id="fb348a41-07d3-4f07-ba2d-2c347370ebcc" name="Changes" comment="Construindo estrutura pastas Web e Main">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
@@ -94,7 +93,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="alterações de correção de pacotes" />
-    <option name="LAST_COMMIT_MESSAGE" value="alterações de correção de pacotes" />
+    <MESSAGE value="Construindo estrutura pastas Web e Main" />
+    <option name="LAST_COMMIT_MESSAGE" value="Construindo estrutura pastas Web e Main" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>

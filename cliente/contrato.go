@@ -60,38 +60,43 @@ func (c *Contrato) ExisteNotificacao(registrar bool, id int) string {
 func (c *Contrato) ConsultarNotificacao(registrar bool, id int) (*entidade.Notificacao, error) {
 
 	log.Println("--> Transação ConsultarNotificacao, função retorna um ativo")
+	var nEmBytes []byte
 	var n *entidade.Notificacao
 	var err error
 	idString := strconv.Itoa(id)
 	contract := c.contrato
 	if registrar {
 		fmt.Println("Você escolheu registrar transação")
-		n, err = contract.SubmitTransaction("consultarNotificacao", idString)
+		nEmBytes, err = contract.SubmitTransaction("consultarNotificacao", idString)
 	} else {
 		fmt.Println("Você escolheu não registrar transação")
-		n, err = contract.EvaluateTransaction("consultarNotificacao", idString)
+		nEmBytes, err = contract.EvaluateTransaction("consultarNotificacao", idString)
 	}
 
 	if err != nil {
 		log.Fatalf("Falhou em Transação consultarNotificacao : %v\n", err)
 	}
+	_ = json.Unmarshal(nEmBytes,n)
 	return n, err
 }
 func (c *Contrato) ObterTodasNotificacoes(registrar bool) ([]*consulta.ResultadoConsulta, error) {
 
 	contract := c.contrato
 	log.Println("--> Transação ObterTodasNotificacoes, função que retorna todos os ativos na ledger")
+	var resultEmBytes []byte
 	var result []*consulta.ResultadoConsulta
 	var err error
 	if registrar {
-		result, err = contract.SubmitTransaction("obterTodasNotificacoes")
+		resultEmBytes, err = contract.SubmitTransaction("obterTodasNotificacoes")
 	} else {
-		result, err = contract.EvaluateTransaction("obterTodasNotificacoes")
+		resultEmBytes, err = contract.EvaluateTransaction("obterTodasNotificacoes")
 	}
 
 	if err != nil {
 		log.Fatalf("Falhou a getTodosOis transação: %v", err)
 	}
+
+	_ = json.Unmarshal(resultEmBytes,result)
 
 	return result, nil
 
