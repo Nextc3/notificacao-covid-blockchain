@@ -58,7 +58,7 @@ func main() {
 	roteador.PathPrefix("/static/").Handler(ngroni.With(
 		negroni.Wrap(http.StripPrefix("/static/", fileServer)),
 	)).Methods("GET", "OPTIONS")
-
+	//Para ser verificado de tempos em tempos nas clouds
 	roteador.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		// used to health check, will return 200
 	})

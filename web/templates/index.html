@@ -1,0 +1,86 @@
+{{define "index"}}
+{{template "header" .}}
+<div class="container">
+    <h1>Notificações</h1>
+
+    {{ with .Notificacoes }}
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Id</th>
+                <th scope="col">Notificador</th>
+                <th scope="col">Possui Cpf?</th>
+                <th scope="col">É Profissional de Saúde?</th>
+                <th scope="col">É Profissional de Segurança?</th>
+                <th scope="col">CPF</th>
+                <th scope="col">Ocupação</th>
+                <th scope="col">Data de Nascimento</th>
+                <th scope="col">Sexo</th>
+                <th scope="col">Raça</th>
+                <th scope="col">É de povo tradicional?</th>
+                <th scope="col">CEP</th>
+                <th scope="col">Logradouro</th>
+                <th scope="col">Número do Endereço</th>
+                <th scope="col">Complemento</th>
+                <th scope="col">Bairro</th>
+                <th scope="col">Estado</th>
+                <th scope="col">Municipio</th>
+                <th scope="col">Telefone</th>
+                <th scope="col">Email</th>
+                <th scope="col">Estrategia</th>
+                <th scope="col">Localização do Teste</th>
+                <th scope="col">Data de Notificação</th>
+                <th scope="col">Sintomas</th>
+                <th scope="col">Condições</th>
+                <th scope="col">Vacinas</th>
+                <th scope="col">Teste</th>
+                <th scope="col">Contatos</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            {{ range . }}
+            <tr>
+                <th scope="row">{{.Id}}</th>
+                <td>{{.Id}}</td>
+                <td>{{.CidadaoNotificador}}</td>
+                <td>{{.TemCPF}}</td>
+                <td>{{.EhProfissionalDeSaude}}</td>
+                <td>{{.EhProfissionalDeSeguranca}}</td>
+                <td>{{.Cpf}}</td>
+                <td>{{.Ocupacao}}</td>
+	            <td>{{.Nome}}</td>
+                <td>{{.DataNascimento}}</td>
+                <td>{{.Sexo}}</td>
+                <td>{{.Raca}}</td>
+                <td>{{.PovoTradicional}}</td>
+                <td>{{.Cep}}</td>
+                <td>{{.Logradouro}}</td>
+                <td>{{.NumeroEndereco}}</td>
+                <td>{{.Complemento}}</td>
+                <td>{{.Bairro}}</td>
+                <td>{{.Estado}}</td>
+                <td>{{.Municipio}}</td>
+                <td>{{.Telefone}}</td>
+                <td>{{.Email}}</td>
+                <td>{{.Estrategia}}</td>
+                <td>{{.LocalizacaoTeste}}</td>
+                <td>{{.DataNotificacao}}</td>
+                <td>{{.Condicoes}}</td>
+                <td>{{.Vacinas}}</td>
+                <td>{{.Teste}}</td>
+                <td>{{.Contatos}}</td>            
+            </tr>
+            {{end}}
+
+        </tbody>
+    </table>
+    {{else}}
+    <div class="alert alert-primary" role="alert">
+        Não existem notificações cadastradas
+    </div>
+    {{end}}
+</div>
+{{template "rodape" .}}
+{{end}}

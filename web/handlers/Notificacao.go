@@ -113,16 +113,18 @@ func obterTodasNotificacoesJSON(w http.ResponseWriter, meuservico interfaceservi
 	todos, err := meuservico.ObterTodos()
 	if err != nil {
 		//passa um erro como resposta. Sinaliza também no cabeçalho
-		w.Write(formatJSONError(err.Error()))
 		w.WriteHeader(http.StatusInternalServerError)
+		w.Write(formatJSONError(err.Error()))
+		
 		return
 	}
 	//vamos converter o resultado em JSON e gerar a resposta o response
 	//http.ResponseWriter implementa interface ResponseWriter assim como io.Writer	
 	err = json.NewEncoder(w).Encode(todos)
 	if err != nil {
-		w.Write(formatJSONError("Erro convertendo em JSON"))
 		w.WriteHeader(http.StatusInternalServerError)
+		w.Write(formatJSONError("Erro convertendo em JSON"))
+		
 		return
 	}
 }
@@ -153,7 +155,7 @@ func obterTodasNotificacoesHTML(w http.ResponseWriter, meuservico interfaceservi
 		Notificacoes []*entidade.Notificacao
 	}{
 		//Variavel
-		Titulo:       "Notificações",
+		Titulo:       "Notificacoes",
 		Notificacoes: todos,
 	}
 	err = ts.Lookup("index.html").ExecuteTemplate(w, "index", dado)
