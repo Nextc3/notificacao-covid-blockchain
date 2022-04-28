@@ -7,7 +7,7 @@
 # Exit on first error
 set -e
 
-# don't rewrite paths for Windows Git Bash users
+# don't rewrite paths for 
 export MSYS_NO_PATHCONV=1
 starttime=$(date +%s)
 CC_SRC_LANGUAGE=${1:-"go"}
