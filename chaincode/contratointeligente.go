@@ -116,7 +116,7 @@ func main() {
 	contrato, err := contractapi.NewChaincode(new(ContratoInteligente))
 
 	if err != nil {
-		fmt.Printf("Erro em criar helloworld chaincode: %s", err.Error())
+		fmt.Printf("Erro em criar contrato inteligente contrato: %s", err.Error())
 		return
 	}
 
