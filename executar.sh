@@ -38,7 +38,7 @@ pushd ../../test-network
 #./meuNetwork.sh deployCC -ccn contratointeligente  -ccv 1 -cci initLedger -ccl ${CC_SRC_LANGUAGE} -ccp ${CC_SRC_PATH}
 popd
 
-go run contratointeligente.go
+go run ../web/main.go
 #Executando minha rede 
 #./inicializarRede.sh
 
