@@ -1,7 +1,28 @@
 # notificacao-covid-blockchain
-Trabalho de conclusão de curso com objetivo construir um sistema de notificação de COVID19 simples utilizando Hyperledger Fabric 2.2
+Trabalho de conclusão de curso com objetivo construir um sistema de notificação de COVID19 simples utilizando Hyperledger Fabric 2.2.x
+
+Instale Golang, Git, cURL, Docker e Docker Compose
+
+Prefira versão do Golang 1.15 e 1.16 e prefira instalar manualmente sem ser pelo gerenciador de pacotes da distribuição Linux.
+
 
 O aplicativo foi construído para ser executado em ambiente linux Ubuntu 20.04.2 LTS arquitetura 64
+
+Se você está trabalhando com git em Windows (mesmo que seja com interação com máquina virtual Linux ou pretende levar código para Linux posteriormente), precisa adequar retorno de linha e entendimento de diretórios com os seguintes comandos no git:
+
+```
+git config --global core.autocrlf false
+git config --global core.longpaths true
+
+```
+Caso tenha problemas com permissões do Docker isso pode ser resolvido com:
+
+```
+sudo setfacl -m "g:docker:rw" /var/run/docker.sock
+$sudo addgroup --system docker
+$sudo adduser $USER docker
+$newgrp docker
+```
 
 
 No seu /home/nomeUsuario

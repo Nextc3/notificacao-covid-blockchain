@@ -28,8 +28,8 @@ CC_SRC_PATH="../chaincode/"
 # clean out any old identites in the wallets
 #limpar as antigas wallets
 
-rm -rf wallet/*
-rm -rf gateway/*
+rm -rf cliente/wallet/*
+rm -rf cliente/gateway/*
 
 # launch network; create channel and join peer to channel
 pushd ../../test-network
@@ -38,7 +38,11 @@ pushd ../../test-network
 #./meuNetwork.sh deployCC -ccn contratointeligente  -ccv 1 -cci initLedger -ccl ${CC_SRC_LANGUAGE} -ccp ${CC_SRC_PATH}
 popd
 
+<<<<<<< HEAD
 go run ../web/main.go
+=======
+go run web/main.go
+>>>>>>> a9dd5fb207c4cd6189e66d91c19363d6887ea25d
 #Executando minha rede 
 #./inicializarRede.sh
 
