@@ -104,7 +104,7 @@ func (c *ContratoInteligente) ObterTodasNotificacoes(contexto contractapi.Transa
 }
 
 //Caso tivesse um main nesse arquivo
-/*
+
 func main() {
 	// See chaincode.env.example
 	/*
@@ -112,14 +112,14 @@ func main() {
 			CCID:    os.Getenv("CHAINCODE_ID"),
 			Address: os.Getenv("CHAINCODE_SERVER_ADDRESS"),
 		} */
-/*
-	chaincode, err := contractapi.NewChaincode(new(SmartContract))
+
+	contrato, err := contractapi.NewChaincode(new(ContratoInteligente))
 
 	if err != nil {
 		fmt.Printf("Erro em criar helloworld chaincode: %s", err.Error())
 		return
 	}
-*/
+
 /*
 	server := &shim.ChaincodeServer{
 		CCID:    config.CCID,
@@ -133,13 +133,13 @@ func main() {
 		fmt.Printf("Erro em estartar helloworld chaincode: %s", err.Error())
 	}
 */
-/*
-		if err := chaincode.Start(); err != nil {
+
+		if err := contrato.Start(); err != nil {
 			fmt.Printf("Erro em criar helloworld chaincode: %s", err.Error())
 		}
-	}
+	
 
-*/
+}
 /* Mudar notificação está fora do escopo desse trabalho
 o método abaixo ainda tá com corpo de teste
 // ChangeOiPessoa atualiza o campo Pessoa da Oi com id fornecido no estado mundial
