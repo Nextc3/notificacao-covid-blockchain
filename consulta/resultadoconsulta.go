@@ -4,5 +4,5 @@ import "github.com/Nextc3/notificacao-covid-blockchain/entidade"
 
 type ResultadoConsulta struct {
 	Chave string `json:"chave"`
-	Ativo *entidade.Notificacao
+	Ativo *entidade.Notificacao `json:"ativo"`
 }
