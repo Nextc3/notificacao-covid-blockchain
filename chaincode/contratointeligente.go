@@ -1,4 +1,5 @@
 package main
+//Assim por ter método main no corpo, precisa está no pacote main também
 
 import (
 	"encoding/json"
