@@ -1,4 +1,4 @@
-package chaincode
+package main
 
 import (
 	"encoding/json"
