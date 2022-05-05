@@ -1,5 +1,4 @@
 package main
-//Assim por ter método main no corpo, precisa está no pacote main também
 
 import (
 	"encoding/json"
@@ -19,8 +18,17 @@ type ContratoInteligente struct {
 
 func (c *ContratoInteligente) InitLedger(contexto contractapi.TransactionContextInterface) error {
 	//método inicial. Normalmente para inserir ativos de testes
+	
+	notificacao := entidade.Notificacao{}
+	notificacao.Id = 1
+	noti,_ := json.Marshal(notificacao)
 
-	return nil
+	
+	
+	return c.CriarNotificacao(contexto,string(noti))
+	
+
+	
 }
 
 //Cria notificação
@@ -141,6 +149,7 @@ func main() {
 	
 
 }
+
 /* Mudar notificação está fora do escopo desse trabalho
 o método abaixo ainda tá com corpo de teste
 // ChangeOiPessoa atualiza o campo Pessoa da Oi com id fornecido no estado mundial
