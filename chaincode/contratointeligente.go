@@ -1,10 +1,11 @@
-package chaincode
+package main
 
 import (
 	"encoding/json"
 	"fmt"
 	"github.com/Nextc3/notificacao-covid-blockchain/consulta"
 	"github.com/Nextc3/notificacao-covid-blockchain/entidade"
+	"github.com/hyperledger/fabric-chaincode-go/shim"
 	"strconv"
 
 	"github.com/hyperledger/fabric-contract-api-go/contractapi"
@@ -19,7 +20,81 @@ type ContratoInteligente struct {
 func (c *ContratoInteligente) InitLedger(contexto contractapi.TransactionContextInterface) error {
 	//método inicial. Normalmente para inserir ativos de testes
 
-	return nil
+	notificacao := entidade.Notificacao{
+		Id: 1,
+		CidadaoNotificador: entidade.Notificador{
+			Id:             1,
+			Email:          "nextc3@gmail.com",
+			Cpf:            "123.456.789-09",
+			DataNascimento: "28/06/1988",
+			Nome:           "Caio Costa Cavalcante",
+			NomeDaMae:      "Maria Ângela",
+			Estado:         "BA",
+			Municipio:      "Salvador",
+			Telefone:       "(71)98888-8888",
+			Ocupacao:       "Analista de Sistemas",
+		},
+		TemCPF:                    true,
+		EhProfissionalDeSaude:     false,
+		EhProfissionalDeSeguranca: false,
+		Cpf:                       "987.654.321-09",
+		Ocupacao:                  "Prostituta",
+		Nome:                      "Natasha Caldeirão",
+		DataNascimento:            "25/12/1988",
+		Sexo:                      true,
+		Raca:                      2,
+		PovoTradicional:           false,
+		Cep:                       "41000-00",
+		Logradouro:                "Ladeira da Conceição da Praia",
+		NumeroEndereco:            "6",
+		Complemento:               "Meia Três - Casa da Fantasia",
+		Bairro:                    "Comércio",
+		Estado:                    "BA",
+		Municipio:                 "Salvador",
+		Telefone:                  "(71)6969-6969",
+		Email:                     "natashadelicia@gmail.com",
+		Estrategia:                1,
+		LocalizacaoTeste:          1,
+		DataNotificacao:           "05/05/2022",
+		Sintomas: map[string]bool{
+			"dispneia": true,
+		},
+		Condicoes: map[string]bool{
+			"Imunossupressão": true,
+		},
+		Vacinas: map[string]bool{
+			"1 jansen": true,
+		},
+		Teste: []entidade.TesteCovid{
+			{
+				Id:            1,
+				TipoDeTeste:   "rt-pcr",
+				EstadoDoTeste: 1,
+				DataDaColeta:  "05/05/2022",
+				Resultado:     0,
+				Lote:          "11111",
+				Fabricante:    "fiocruz",
+			},
+		},
+		Contatos: []entidade.ContatoNonitorado{
+			{
+				Id:                1,
+				Nome:              "Mirella Boladona",
+				Estado:            "BA",
+				Municipio:         "Salvador",
+				Cpf:               "111.444.691-69",
+				Telefone1:         "(71)96969-6969",
+				Telefone2:         "(71)98787-7171",
+				DataUltimoContato: "01/01/2021",
+				RelacaoComOCaso:   3,
+			},
+		},
+	}
+
+	noti, _ := json.Marshal(notificacao)
+
+	return c.CriarNotificacao(contexto, string(noti))
+
 }
 
 //Cria notificação
@@ -82,7 +157,12 @@ func (c *ContratoInteligente) ObterTodasNotificacoes(contexto contractapi.Transa
 	if err != nil {
 		return nil, err
 	}
-	defer resultadoIteracao.Close()
+	defer func(resultadoIteracao shim.StateQueryIteratorInterface) {
+		err := resultadoIteracao.Close()
+		if err != nil {
+
+		}
+	}(resultadoIteracao)
 
 	results := []*consulta.ResultadoConsulta{}
 
@@ -120,26 +200,26 @@ func main() {
 		return
 	}
 
-/*
-	server := &shim.ChaincodeServer{
-		CCID:    config.CCID,
-		Address: config.Address,
-		CC:      chaincode,
-		TLSProps: shim.TLSProperties{
-			Disabled: true,
-		},
-	}
-	if err := server.Start(); err != nil {
-		fmt.Printf("Erro em estartar helloworld chaincode: %s", err.Error())
-	}
-*/
-
-		if err := contrato.Start(); err != nil {
-			fmt.Printf("Erro em criar helloworld chaincode: %s", err.Error())
+	/*
+		server := &shim.ChaincodeServer{
+			CCID:    config.CCID,
+			Address: config.Address,
+			CC:      chaincode,
+			TLSProps: shim.TLSProperties{
+				Disabled: true,
+			},
 		}
-	
+		if err := server.Start(); err != nil {
+			fmt.Printf("Erro em estartar helloworld chaincode: %s", err.Error())
+		}
+	*/
+
+	if err := contrato.Start(); err != nil {
+		fmt.Printf("Erro em criar helloworld chaincode: %s", err.Error())
+	}
 
 }
+
 /* Mudar notificação está fora do escopo desse trabalho
 o método abaixo ainda tá com corpo de teste
 // ChangeOiPessoa atualiza o campo Pessoa da Oi com id fornecido no estado mundial
