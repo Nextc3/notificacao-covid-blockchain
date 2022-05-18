@@ -6,6 +6,7 @@ import (
 	"github.com/Nextc3/notificacao-covid-blockchain/consulta"
 	"github.com/Nextc3/notificacao-covid-blockchain/entidade"
 	"github.com/hyperledger/fabric-chaincode-go/shim"
+	"log"
 	"strconv"
 
 	"github.com/hyperledger/fabric-contract-api-go/contractapi"
@@ -76,7 +77,7 @@ func (c *ContratoInteligente) gerarObjetoTeste() (entidade.Notificacao, entidade
 	}
 	//Segundo objeto de teste
 	n2 := entidade.Notificacao{
-		Id: 1,
+		Id: 2,
 		CidadaoNotificador: entidade.Notificador{
 			Id:             1,
 			Email:          "nextc3@gmail.com",
@@ -165,8 +166,13 @@ func (c *ContratoInteligente) CriarNotificacao(contexto contractapi.TransactionC
 	_ = json.Unmarshal(notificacaoEmBytes, &n)
 
 	//Chave do estado é Notificacao + Id da notificacao
+	//Cuidado para não salvar uma Notificação com mesmo Id pois são utilizados para salvar na ledger
+	err := contexto.GetStub().PutState("Notificacao"+strconv.Itoa(n.Id), notificacaoEmBytes)
+	if err != nil {
+		log.Fatalf("Erro ao salvar na ledger %s", err)
+	}
 
-	return contexto.GetStub().PutState("Notificacao"+strconv.Itoa(n.Id), notificacaoEmBytes)
+	return err
 }
 
 //retorna uma notificacao
@@ -237,7 +243,13 @@ func (c *ContratoInteligente) ObterTodasNotificacoes(contexto contractapi.Transa
 		_ = json.Unmarshal(queryResponse.Value, &notificacao)
 
 		queryResult := consulta.ResultadoConsulta{Chave: queryResponse.Key, Ativo: notificacao}
+		/*fmt.Println("Chave :")
+		fmt.Println(queryResponse.Key)
+		fmt.Println("Notificação sendo adicionado aos resultados:")
+		fmt.Println(notificacao)*/
 		results = append(results, &queryResult)
+		/*fmt.Println("Notificação adicionada:")
+		fmt.Println(notificacao.Id)*/
 	}
 
 	return results, nil
