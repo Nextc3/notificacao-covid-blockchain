@@ -15,12 +15,9 @@ type ContratoInteligente struct {
 	contractapi.Contract
 }
 
-//Para saber a scruct que está sendo utilizada, por favor, veja no pacote Entidades
-
-func (c *ContratoInteligente) InitLedger(contexto contractapi.TransactionContextInterface) error {
-	//método inicial. Normalmente para inserir ativos de testes
-
-	notificacao := entidade.Notificacao{
+//gerarObjetoTeste retorna dois objetos com valores de teste sendo que o segundo pode ser ignorado
+func (c *ContratoInteligente) gerarObjetoTeste() (entidade.Notificacao, entidade.Notificacao) {
+	n1 := entidade.Notificacao{
 		Id: 1,
 		CidadaoNotificador: entidade.Notificador{
 			Id:             1,
@@ -44,7 +41,7 @@ func (c *ContratoInteligente) InitLedger(contexto contractapi.TransactionContext
 		Sexo:                      true,
 		Raca:                      2,
 		PovoTradicional:           false,
-		Cep:                       "41000-00",
+		Cep:                       "41000-000",
 		Logradouro:                "Ladeira da Conceição da Praia",
 		NumeroEndereco:            "6",
 		Complemento:               "Meia Três - Casa da Fantasia",
@@ -76,24 +73,87 @@ func (c *ContratoInteligente) InitLedger(contexto contractapi.TransactionContext
 				Fabricante:    "fiocruz",
 			},
 		},
-		Contatos: []entidade.ContatoNonitorado{
+	}
+	//Segundo objeto de teste
+	n2 := entidade.Notificacao{
+		Id: 1,
+		CidadaoNotificador: entidade.Notificador{
+			Id:             1,
+			Email:          "nextc3@gmail.com",
+			Cpf:            "123.456.789-09",
+			DataNascimento: "28/06/1988",
+			Nome:           "Caio Costa Cavalcante",
+			NomeDaMae:      "Maria Ângela",
+			Estado:         "BA",
+			Municipio:      "Salvador",
+			Telefone:       "(71)98888-8888",
+			Ocupacao:       "Analista de Sistemas",
+		},
+		TemCPF:                    true,
+		EhProfissionalDeSaude:     false,
+		EhProfissionalDeSeguranca: false,
+		Cpf:                       "123.789.321-09",
+		Ocupacao:                  "Prostituta",
+		Nome:                      "Mirela da Porrada",
+		DataNascimento:            "12/06/1988",
+		Sexo:                      true,
+		Raca:                      1,
+		PovoTradicional:           false,
+		Cep:                       "43805-000",
+		Logradouro:                "BA-522",
+		NumeroEndereco:            "6",
+		Complemento:               "Brega de Caroba",
+		Bairro:                    "Candeias",
+		Estado:                    "BA",
+		Municipio:                 "Candeias",
+		Telefone:                  "(71)2969-6969",
+		Email:                     "mirelaporradanosinimigos@gmail.com",
+		Estrategia:                2,
+		LocalizacaoTeste:          2,
+		DataNotificacao:           "16/05/2022",
+		Sintomas: map[string]bool{
+			"assintomatico": true,
+		},
+		Condicoes: map[string]bool{
+			"Doenças cardíacas crônicas": true,
+		},
+		Vacinas: map[string]bool{
+			"1 pfizer": true,
+			"2 pfizer": true,
+			"3 pfizer": false,
+		},
+		Teste: []entidade.TesteCovid{
 			{
-				Id:                1,
-				Nome:              "Mirella Boladona",
-				Estado:            "BA",
-				Municipio:         "Salvador",
-				Cpf:               "111.444.691-69",
-				Telefone1:         "(71)96969-6969",
-				Telefone2:         "(71)98787-7171",
-				DataUltimoContato: "01/01/2021",
-				RelacaoComOCaso:   3,
+				Id:            2,
+				TipoDeTeste:   "rt-pcr",
+				EstadoDoTeste: 1,
+				DataDaColeta:  "18/05/2022",
+				Resultado:     0,
+				Lote:          "112222",
+				Fabricante:    "fiocruz",
 			},
 		},
 	}
 
-	noti, _ := json.Marshal(notificacao)
+	return n1, n2
 
-	return c.CriarNotificacao(contexto, string(noti))
+}
+
+//Para saber a scruct que está sendo utilizada, por favor, veja no pacote Entidades
+
+func (c *ContratoInteligente) InitLedger(contexto contractapi.TransactionContextInterface) error {
+	//método inicial. Normalmente para inserir ativos de testes
+
+	n1, n2 := c.gerarObjetoTeste()
+
+	noti1, _ := json.Marshal(n1)
+	noti2, _ := json.Marshal(n2)
+	err := c.CriarNotificacao(contexto, string(noti2))
+	if err != nil {
+		return err
+	}
+
+	return c.CriarNotificacao(contexto, string(noti1))
 
 }
 
