@@ -29,7 +29,6 @@ type Notificacao struct {
 	Condicoes                 map[string]bool      `json:"condicoes"`
 	Vacinas                   map[string]bool      `json:"vacinas"`
 	Teste                     []TesteCovid         `json:"testeCovid"`
-	Contatos                  []ContatoNonitorado  `json:"contatos"`
 }
 
 const (
