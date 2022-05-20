@@ -22,7 +22,7 @@ func (c *Contrato) SetContrato(g *gateway.Contract) {
 
 // CriarNotificacao /*
 //CriarNotificacao transforma em um JSON e depois em uma String e envia com SubmitTransaction
-func (c *Contrato) CriarNotificacao(n *entidade.Notificacao) {
+func (c *Contrato) CriarNotificacao(n entidade.Notificacao) {
 	log.Println("--> Transação de Submit: CriarNotificacao, cria ativos do tipo Notificacao")
 	contract := c.contrato
 	nEmBytes, _ := json.Marshal(n)
@@ -57,11 +57,11 @@ func (c *Contrato) ExisteNotificacao(registrar bool, id int) string {
 	}
 	return string(result)
 }
-func (c *Contrato) ConsultarNotificacao(registrar bool, id int) (*entidade.Notificacao, error) {
+func (c *Contrato) ConsultarNotificacao(registrar bool, id int) (entidade.Notificacao, error) {
 
 	log.Println("--> Transação ConsultarNotificacao, função retorna um ativo")
 	var nEmBytes []byte
-	var n *entidade.Notificacao
+	var n entidade.Notificacao
 	var err error
 	idString := strconv.Itoa(id)
 	contract := c.contrato
@@ -76,15 +76,15 @@ func (c *Contrato) ConsultarNotificacao(registrar bool, id int) (*entidade.Notif
 	if err != nil {
 		log.Fatalf("Falhou em Transação consultarNotificacao : %v\n", err)
 	}
-	_ = json.Unmarshal(nEmBytes,n)
+	_ = json.Unmarshal(nEmBytes, &n)
 	return n, err
 }
-func (c *Contrato) ObterTodasNotificacoes(registrar bool) ([]*consulta.ResultadoConsulta, error) {
+func (c *Contrato) ObterTodasNotificacoes(registrar bool) ([]consulta.ResultadoConsulta, error) {
 
 	contract := c.contrato
 	log.Println("--> Transação ObterTodasNotificacoes, função que retorna todos os ativos na ledger")
 	var resultEmBytes []byte
-	var result []*consulta.ResultadoConsulta
+	var result []consulta.ResultadoConsulta
 	var err error
 	if registrar {
 		resultEmBytes, err = contract.SubmitTransaction("obterTodasNotificacoes")
@@ -96,7 +96,7 @@ func (c *Contrato) ObterTodasNotificacoes(registrar bool) ([]*consulta.Resultado
 		log.Fatalf("Falhou a getTodosOis transação: %v", err)
 	}
 
-	_ = json.Unmarshal(resultEmBytes,result)
+	_ = json.Unmarshal(resultEmBytes, &result)
 
 	return result, nil
 
@@ -104,6 +104,7 @@ func (c *Contrato) ObterTodasNotificacoes(registrar bool) ([]*consulta.Resultado
 func (c *Contrato) InitLedger() {
 	contract := c.contrato
 	log.Println("--> Transação de Submit: InitLedger, função cria o conjunto inicial de ativos no razão. Para estudo")
+	log.Println("Por enquanto está vazia")
 	_, err := contract.SubmitTransaction("initLedger")
 	if err != nil {
 

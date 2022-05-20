@@ -24,14 +24,14 @@ func setarDiscovery() {
 
 }
 
-func (c *Conexao) IniciarConexao() *gateway.Contract {
+func (c *Conexao) IniciarConexao() (*gateway.Contract, *gateway.Gateway) {
 	fmt.Println("Iniciando conexão")
 	fmt.Println("Setar discovery")
 	setarDiscovery()
 	fmt.Println("Obtendo Wallet")
 	wallet, err := getWallet()
 	fmt.Println("Credenciando Wallet")
-	err = credenciarWallet(wallet, err)
+	err = credenciarWallet(wallet)
 
 	if err != nil {
 		log.Fatalf("Falhou em credenciar a Wallet %v", err)
@@ -53,7 +53,7 @@ func (c *Conexao) IniciarConexao() *gateway.Contract {
 	fmt.Println("Obtendo contrato inteligente da rede/canal")
 	contrato := network.GetContract("contratointeligente")
 	fmt.Println("Retornando contrato inteligente")
-	return contrato
+	return contrato, gw
 
 }
 
@@ -76,7 +76,6 @@ func getGateway(caminho string, wallet *gateway.Wallet) *gateway.Gateway {
 func getCaminhoConexaoOrg1Yaml() string {
 	caminho := filepath.Join(
 		"..",
-		"..",
 		"test-network",
 		"organizations",
 		"peerOrganizations",
@@ -85,17 +84,17 @@ func getCaminhoConexaoOrg1Yaml() string {
 	)
 	return caminho
 }
-func credenciarWallet(wallet *gateway.Wallet, err error) error {
+func credenciarWallet(wallet *gateway.Wallet) error {
 	fmt.Println("Credenciar Wallet")
 	if !wallet.Exists("appUser") {
-		err = populateWallet(wallet)
+		err := populateWallet(wallet)
 		if err != nil {
 			log.Fatalf("Falhou em colocar credenciais na wallet: %v", err)
 		}
 	}
 
 	fmt.Println("Credenciou Wallet")
-	return err
+	return nil
 }
 func getWallet() (*gateway.Wallet, error) {
 	fmt.Println("Obtendo Wallet")
@@ -111,7 +110,6 @@ func populateWallet(wallet *gateway.Wallet) error {
 	log.Println("============ Populating wallet ============")
 	log.Println("Obtendo credenciais")
 	credPath := filepath.Join(
-		"..",
 		"..",
 		"test-network",
 		"organizations",
@@ -152,4 +150,3 @@ func populateWallet(wallet *gateway.Wallet) error {
 	fmt.Println("Registrando na Wallet a identidade de Org1 e usuário")
 	return wallet.Put("appUser", identity)
 }
-

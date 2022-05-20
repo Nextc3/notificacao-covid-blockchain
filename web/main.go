@@ -16,11 +16,17 @@ import (
 func main() {
 	//Pra executar go run main.go
 	//Main só pra costurar e compor coisas necessárias pra camada de negócio
-	var c *cliente.ClienteBlockchain
-	c.Contrato.SetContrato(c.Conexao.IniciarConexao())
-	defer c.Conexao.FecharConexao()
-	c.Contrato.InitLedger()
-	meuservico := implementacaoservico.NewServico(c)
+	var conex cliente.Conexao
+	var contra cliente.Contrato
+	aux, gw := conex.IniciarConexao()
+	defer gw.Close()
+
+	if aux == nil && gw == nil {
+		log.Fatalf("Falha em começar uma conexão. No método principal")
+	}
+	contra.SetContrato(aux)
+
+	meuservico := implementacaoservico.NewServico(contra)
 
 	//roteador pra fazer controle de rotas
 	roteador := mux.NewRouter()
@@ -36,7 +42,7 @@ func main() {
 	//static files
 	/*
 		retorna um handler que atende solicitações HTTP com o conteúdo do sistema de
-		 arquivos enraizado na raiz.Como um caso especial, o servidor de arquivos 
+		 arquivos enraizado na raiz.Como um caso especial, o servidor de arquivos
 		 retornado redireciona qualquer solicitação que termine em "/index.html"
 		  para o mesmo caminho, sem o "index.html" final.
 		  Para usar a implementação do sistema de arquivos do sistema operacional, é usado http.Dir:
