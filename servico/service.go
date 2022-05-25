@@ -1,4 +1,4 @@
-package interfaceservico
+package servico
 
 import (
 	"github.com/Nextc3/notificacao-covid-blockchain/entidade"

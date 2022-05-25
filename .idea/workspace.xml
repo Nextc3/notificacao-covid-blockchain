@@ -4,15 +4,10 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fb348a41-07d3-4f07-ba2d-2c347370ebcc" name="Changes" comment="Modificando go.mod e go.sum">
+    <list default="true" id="fb348a41-07d3-4f07-ba2d-2c347370ebcc" name="Changes" comment="Integração com API e corrigindo imports e serviço">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/implementacaoservico/servicoblockchain.go" beforeDir="false" afterPath="$PROJECT_DIR$/implementacaoservico/servicoblockchain.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/implementacaoservico/servicoblockchain_test.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/interfaceservico/iservico.go" beforeDir="false" afterPath="$PROJECT_DIR$/interfaceservico/service.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/interfaceservico/service.go" beforeDir="false" afterPath="$PROJECT_DIR$/servico/service.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web/handlers/notificacao.go" beforeDir="false" afterPath="$PROJECT_DIR$/web/handlers/notificacao.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/web/main.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -104,7 +99,8 @@
     <MESSAGE value="Construindo estrutura pastas Web e Main" />
     <MESSAGE value="Finalizado teste da parte de cliente" />
     <MESSAGE value="Modificando go.mod e go.sum" />
-    <option name="LAST_COMMIT_MESSAGE" value="Modificando go.mod e go.sum" />
+    <MESSAGE value="Integração com API e corrigindo imports e serviço" />
+    <option name="LAST_COMMIT_MESSAGE" value="Integração com API e corrigindo imports e serviço" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>

@@ -2,7 +2,7 @@ package handlers
 
 import (
 	"encoding/json"
-	"github.com/Nextc3/notificacao-covid-blockchain/interfaceservico"
+	"github.com/Nextc3/notificacao-covid-blockchain/servico"
 
 	"html/template"
 	"net/http"
@@ -18,7 +18,7 @@ import (
 //ou seja, ela pode receber qualquer coisa que implemente a interface
 //isso é muito útil para escrevermos testes, ou podermos substituir toda a
 //implementação da regra de negócios
-func CriarNotificacaoHandlers(r *mux.Router, n *negroni.Negroni, meuservico interfaceservico.) {
+func CriarNotificacaoHandlers(r *mux.Router, n *negroni.Negroni, meuservico servico.Service) {
 	r.Handle("/notificacao", n.With(
 		negroni.Wrap(obterTodasNotificacoes(meuservico))),
 	).Methods("GET", "OPTIONS")
@@ -32,7 +32,7 @@ func CriarNotificacaoHandlers(r *mux.Router, n *negroni.Negroni, meuservico inte
 	)).Methods("POST", "OPTIONS")
 }
 
-func salvarNotificacao(meuservico interfaceservico.Iservico) http.Handler {
+func salvarNotificacao(meuservico servico.Service) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		//adicionar em midleware
 		w.Header().Set("Content-Type", "application/json")
@@ -46,7 +46,7 @@ func salvarNotificacao(meuservico interfaceservico.Iservico) http.Handler {
 			return
 		}
 		//@TODO precisamos validar os dados antes de salvar na base de dados. Fazer posteriormente
-		err = meuservico.Salvar(&notificacao)
+		err = meuservico.Salvar(notificacao)
 		if err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
 			w.Write(formatJSONError(err.Error()))
@@ -60,7 +60,7 @@ func salvarNotificacao(meuservico interfaceservico.Iservico) http.Handler {
 Para testar:
 curl http://localhost:portaHttp/notificacao/1
 */
-func obterNotificacao(meuservico interfaceservico.Iservico) http.Handler {
+func obterNotificacao(meuservico servico.Service) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		//Código duplicado em todos o handlers. Posteriormente mudar usando midleware
 		w.Header().Set("Content-Type", "application/json")
@@ -97,7 +97,7 @@ func obterNotificacao(meuservico interfaceservico.Iservico) http.Handler {
 Para testar:
 curl -H 'Accept: application/json' http://localhost:portaUsada/notificacao
 */
-func obterTodasNotificacoes(meuservico interfaceservico.Iservico) http.Handler {
+func obterTodasNotificacoes(meuservico servico.Service) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		//analisa o que o usuário requisitou via headers
 		switch r.Header.Get("Accept") {
@@ -110,7 +110,7 @@ func obterTodasNotificacoes(meuservico interfaceservico.Iservico) http.Handler {
 	})
 }
 
-func obterTodasNotificacoesJSON(w http.ResponseWriter, meuservico interfaceservico.Iservico) {
+func obterTodasNotificacoesJSON(w http.ResponseWriter, meuservico servico.Service) {
 	w.Header().Set("Content-Type", "application/json")
 	todos, err := meuservico.ObterTodos()
 	if err != nil {
@@ -131,7 +131,7 @@ func obterTodasNotificacoesJSON(w http.ResponseWriter, meuservico interfaceservi
 	}
 }
 
-func obterTodasNotificacoesHTML(w http.ResponseWriter, meuservico interfaceservico.Iservico) {
+func obterTodasNotificacoesHTML(w http.ResponseWriter, meuservico servico.Service) {
 	//Setando cabeçalho
 	w.Header().Set("Content-Type", "text/html")
 	ts, err := template.ParseFiles(
