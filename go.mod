@@ -1,4 +1,4 @@
-module github.com/Nextc3/fabric-samples/notificacao-covid-blockchain
+module github.com/Nextc3/notificacao-covid-blockchain
 
 go 1.15
 

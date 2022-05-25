@@ -2,21 +2,23 @@ package handlers
 
 import (
 	"encoding/json"
+	"github.com/Nextc3/notificacao-covid-blockchain/interfaceservico"
+
 	"html/template"
 	"net/http"
 	"strconv"
 
 	"github.com/Nextc3/notificacao-covid-blockchain/entidade"
-	"github.com/Nextc3/notificacao-covid-blockchain/interfaceservico"
+
 	"github.com/gorilla/mux"
 	"github.com/urfave/negroni"
 )
 
-//a função recebe como terceiro parâmetro a interface
+//CriarNotificacaoHandlers função recebe como terceiro parâmetro a interface
 //ou seja, ela pode receber qualquer coisa que implemente a interface
 //isso é muito útil para escrevermos testes, ou podermos substituir toda a
 //implementação da regra de negócios
-func CriarNotificacaoHandlers(r *mux.Router, n *negroni.Negroni, meuservico interfaceservico.Iservico) {
+func CriarNotificacaoHandlers(r *mux.Router, n *negroni.Negroni, meuservico interfaceservico.) {
 	r.Handle("/notificacao", n.With(
 		negroni.Wrap(obterTodasNotificacoes(meuservico))),
 	).Methods("GET", "OPTIONS")
@@ -115,16 +117,16 @@ func obterTodasNotificacoesJSON(w http.ResponseWriter, meuservico interfaceservi
 		//passa um erro como resposta. Sinaliza também no cabeçalho
 		w.WriteHeader(http.StatusInternalServerError)
 		w.Write(formatJSONError(err.Error()))
-		
+
 		return
 	}
 	//vamos converter o resultado em JSON e gerar a resposta o response
-	//http.ResponseWriter implementa interface ResponseWriter assim como io.Writer	
+	//http.ResponseWriter implementa interface ResponseWriter assim como io.Writer
 	err = json.NewEncoder(w).Encode(todos)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		w.Write(formatJSONError("Erro convertendo em JSON"))
-		
+
 		return
 	}
 }

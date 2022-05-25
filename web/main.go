@@ -1,14 +1,14 @@
 package main
 
 import (
+	"github.com/Nextc3/notificacao-covid-blockchain/cliente"
+	"github.com/Nextc3/notificacao-covid-blockchain/implementacaoservico"
+	"github.com/Nextc3/notificacao-covid-blockchain/web/handlers"
 	"log"
 	"net/http"
 	"os"
 	"time"
 
-	"github.com/Nextc3/notificacao-covid-blockchain/cliente"
-	"github.com/Nextc3/notificacao-covid-blockchain/implementacaoservico"
-	"github.com/Nextc3/notificacao-covid-blockchain/web/handlers"
 	"github.com/gorilla/mux"
 	"github.com/urfave/negroni"
 )
@@ -18,15 +18,15 @@ func main() {
 	//Main só pra costurar e compor coisas necessárias pra camada de negócio
 	var conex cliente.Conexao
 	var contra cliente.Contrato
-	aux, gw := conex.IniciarConexao()
+	contratoGateway, gw := conex.IniciarConexao()
 	defer gw.Close()
 
-	if aux == nil && gw == nil {
+	if contratoGateway == nil && gw == nil {
 		log.Fatalf("Falha em começar uma conexão. No método principal")
 	}
-	contra.SetContrato(aux)
+	contra.SetContrato(contratoGateway)
 
-	meuservico := implementacaoservico.NewServico(contra)
+	meuservico := implementacaoservico.NewService(&contra)
 
 	//roteador pra fazer controle de rotas
 	roteador := mux.NewRouter()
