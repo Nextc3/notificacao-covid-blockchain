@@ -39,7 +39,9 @@ export FABRIC_CFG_PATH=$FABRIC_RAIZ/config
 
 ```
 No seu diretório de go/src/github.com/SeuUsuarioNoGithub execute:
+
 `go get -r github.com/urfave/negroni`
+
 `go get -r github.com/gorilla/mux`
 
 
