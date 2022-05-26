@@ -3,8 +3,6 @@ package handlers
 import (
 	"encoding/json"
 	"github.com/Nextc3/notificacao-covid-blockchain/servico"
-	"html/template"
-
 	"net/http"
 	"strconv"
 
@@ -104,8 +102,6 @@ func obterTodasNotificacoes(meuservico servico.Service) http.Handler {
 		switch r.Header.Get("Accept") {
 		case "application/json":
 			obterTodasNotificacoesJSON(w, meuservico)
-		default:
-			obterTodasNotificacoesHTML(w, meuservico)
 		}
 
 	})
@@ -132,6 +128,7 @@ func obterTodasNotificacoesJSON(w http.ResponseWriter, meuservico servico.Servic
 	}
 }
 
+/*
 func obterTodasNotificacoesHTML(w http.ResponseWriter, meuservico servico.Service) {
 	//Setando cabeçalho
 	w.Header().Set("Content-Type", "text/html")
@@ -151,7 +148,8 @@ func obterTodasNotificacoesHTML(w http.ResponseWriter, meuservico servico.Servic
 	/*
 		dado:= tipo Variavel
 
-	*/
+*/
+/*
 	dado := struct {
 		//tipo
 		Titulo       string
@@ -165,4 +163,6 @@ func obterTodasNotificacoesHTML(w http.ResponseWriter, meuservico servico.Servic
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
+
 }
+*/

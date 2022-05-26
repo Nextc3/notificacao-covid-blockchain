@@ -24,7 +24,7 @@ func setarDiscovery() {
 
 }
 
-func (c *Conexao) IniciarConexao() (*gateway.Contract, *gateway.Gateway) {
+func (c Conexao) IniciarConexao() (*gateway.Contract, *gateway.Gateway) {
 	fmt.Println("Iniciando conexão")
 	fmt.Println("Setar discovery")
 	setarDiscovery()
@@ -61,7 +61,7 @@ func (c *Conexao) IniciarConexao() (*gateway.Contract, *gateway.Gateway) {
 
 }
 
-func (c *Conexao) FecharConexao() {
+func (c Conexao) FecharConexao() {
 	fmt.Println("Fechando conexão do gateway")
 	c.gateway.Close()
 }

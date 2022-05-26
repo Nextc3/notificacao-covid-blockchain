@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"github.com/Nextc3/notificacao-covid-blockchain/cliente"
 	"github.com/Nextc3/notificacao-covid-blockchain/implementacaoservico"
 	"github.com/Nextc3/notificacao-covid-blockchain/web/handlers"
@@ -24,9 +25,10 @@ func main() {
 	if contratoGateway == nil && gw == nil {
 		log.Fatalf("Falha em começar uma conexão. No método principal")
 	}
+	fmt.Println(contratoGateway)
 	contra.SetContrato(contratoGateway)
 
-	meuservico := implementacaoservico.NewService(&contra)
+	meuservico := implementacaoservico.NewService(contra)
 
 	//roteador pra fazer controle de rotas
 	roteador := mux.NewRouter()
@@ -37,7 +39,7 @@ func main() {
 		negroni.NewLogger(),
 	)
 	//handlers
-	handlers.CriarNotificacaoHandlers(roteador, ngroni, meuservico)
+	handlers.CriarNotificacaoHandlers(roteador, ngroni, &meuservico)
 
 	/*
 		retorna um handler que atende solicitações HTTP com o conteúdo do sistema de
@@ -77,7 +79,7 @@ func main() {
 	srv := &http.Server{
 		ReadTimeout:  30 * time.Second,
 		WriteTimeout: 30 * time.Second,
-		Addr:         ":" + os.Getenv("HTTP_PORT"),                   //porta que o servidor http está setado
+		Addr:         ":8080",                                        //porta que o servidor http está setado
 		Handler:      http.DefaultServeMux,                           //raiz criada no http.Handle()
 		ErrorLog:     log.New(os.Stderr, "logger: ", log.Lshortfile), //log como saída de erro padrão no terminal
 	}

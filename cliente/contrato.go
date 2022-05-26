@@ -16,7 +16,7 @@ type Contrato struct {
 	contrato *gateway.Contract
 }
 
-func (c Contrato) SetContrato(g *gateway.Contract) {
+func (c *Contrato) SetContrato(g *gateway.Contract) {
 	c.contrato = g
 }
 
@@ -92,15 +92,19 @@ func (c *Contrato) ConsultarNotificacao(registrar bool, id int) (entidade.Notifi
 func (c *Contrato) ObterTodasNotificacoes(registrar bool) ([]consulta.ResultadoConsulta, error) {
 
 	contract := c.contrato
-	log.Println("--> Transação ObterTodasNotificacoes, função que retorna todos os ativos na ledger")
+	log.Println("--> Contrato: Transação ObterTodasNotificacoes, função que retorna todos os ativos na ledger")
 	var resultEmBytes []byte
 	var result []consulta.ResultadoConsulta
 	var err error
 	if registrar {
-		resultEmBytes, err = contract.SubmitTransaction("obterTodasNotificacoes")
+		log.Println("Consultando contratointeligente")
+		fmt.Println(c)
+		fmt.Println(c.contrato)
+		resultEmBytes, err = contract.SubmitTransaction("ObterTodasNotificacoes")
 	} else {
 		resultEmBytes, err = contract.EvaluateTransaction("obterTodasNotificacoes")
 	}
+	log.Println("Obteve resultado do contrato inteligente")
 
 	if err != nil {
 		log.Fatalf("Falhou a getTodosOis transação: %v", err)

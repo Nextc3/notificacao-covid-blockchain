@@ -19,16 +19,16 @@ type Service interface {
 */
 
 type Servico struct {
-	Contrato *cliente.Contrato
+	Contrato cliente.Contrato
 }
 
-func NewService(c *cliente.Contrato) *Servico {
-	return &Servico{
+func NewService(c cliente.Contrato) Servico {
+	return Servico{
 		Contrato: c,
 	}
 }
 
-func (s *Servico) ObterTodos() ([]*entidade.Notificacao, error) {
+func (s Servico) ObterTodos() ([]*entidade.Notificacao, error) {
 	log.Println("Obtendo todas as Notificações")
 	var result []consulta.ResultadoConsulta
 	var ns []*entidade.Notificacao

@@ -4,31 +4,13 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fb348a41-07d3-4f07-ba2d-2c347370ebcc" name="Changes" comment="Ajeitando README.md">
+    <list default="true" id="fb348a41-07d3-4f07-ba2d-2c347370ebcc" name="Changes" comment="Funcionando menos api">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/chaincode/contratointeligente.go" beforeDir="false" afterPath="$PROJECT_DIR$/chaincode/contratointeligente.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cliente/conexao.go" beforeDir="false" afterPath="$PROJECT_DIR$/cliente/conexao.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cliente/contrato.go" beforeDir="false" afterPath="$PROJECT_DIR$/cliente/contrato.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cliente/gateway/appUser.id" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/implementacaoservico/servicoblockchain.go" beforeDir="false" afterPath="$PROJECT_DIR$/implementacaoservico/servicoblockchain.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web/handlers/notificacao.go" beforeDir="false" afterPath="$PROJECT_DIR$/web/handlers/notificacao.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/web/notificaapi.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/static/css/bootstrap-grid.min.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/static/css/bootstrap-grid.min.css.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/static/css/bootstrap-reboot.min.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/static/css/bootstrap-reboot.min.css.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/static/css/bootstrap.min.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/static/css/bootstrap.min.css.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/static/js/bootstrap.bundle.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/static/js/bootstrap.bundle.min.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/static/js/bootstrap.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/static/js/bootstrap.min.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/templates/header.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/templates/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/templates/notificacao.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/templates/rodape.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/notificaapi.go" beforeDir="false" afterPath="$PROJECT_DIR$/web/notificaapi.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -151,7 +133,8 @@
     <MESSAGE value="Integração com API e corrigindo imports e serviço" />
     <MESSAGE value="Corrigindo service.go com novo pacote servico" />
     <MESSAGE value="Ajeitando README.md" />
-    <option name="LAST_COMMIT_MESSAGE" value="Ajeitando README.md" />
+    <MESSAGE value="Funcionando menos api" />
+    <option name="LAST_COMMIT_MESSAGE" value="Funcionando menos api" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>
