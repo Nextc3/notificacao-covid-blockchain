@@ -14,7 +14,7 @@ import (
 )
 
 func main() {
-	//Pra executar go run main.go
+	//Pra executar go run
 	//Main só pra costurar e compor coisas necessárias pra camada de negócio
 	var conex cliente.Conexao
 	var contra cliente.Contrato
@@ -39,7 +39,6 @@ func main() {
 	//handlers
 	handlers.CriarNotificacaoHandlers(roteador, ngroni, meuservico)
 
-	//static files
 	/*
 		retorna um handler que atende solicitações HTTP com o conteúdo do sistema de
 		 arquivos enraizado na raiz.Como um caso especial, o servidor de arquivos
@@ -47,7 +46,7 @@ func main() {
 		  para o mesmo caminho, sem o "index.html" final.
 		  Para usar a implementação do sistema de arquivos do sistema operacional, é usado http.Dir:
 	*/
-	fileServer := http.FileServer(http.Dir("./web/static"))
+	//fileServer := http.FileServer(http.Dir("./web/static"))
 	/*o método PathPrefix registra uma nova rota ("/static/")
 	Na nova rota criada setado um Http Handler (manipulador de requisições que a respondem)
 	o http handler em questão é retornado pela combinação de vários handlers feitos pelo negroni
@@ -60,10 +59,12 @@ func main() {
 	Methods:  adiciona um conexão para métodos HTTP. Caso não seja colocado retorna 404
 	*/
 	//
+	/*
+		roteador.PathPrefix("/static/").Handler(ngroni.With(
+			negroni.Wrap(http.StripPrefix("/static/", fileServer)),
+		)).Methods("GET", "OPTIONS")
 
-	roteador.PathPrefix("/static/").Handler(ngroni.With(
-		negroni.Wrap(http.StripPrefix("/static/", fileServer)),
-	)).Methods("GET", "OPTIONS")
+	*/
 	//Para ser verificado de tempos em tempos nas clouds
 	roteador.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		// used to health check, will return 200

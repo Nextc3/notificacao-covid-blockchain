@@ -3,8 +3,8 @@ package handlers
 import (
 	"encoding/json"
 	"github.com/Nextc3/notificacao-covid-blockchain/servico"
-
 	"html/template"
+
 	"net/http"
 	"strconv"
 
@@ -79,6 +79,7 @@ func obterNotificacao(meuservico servico.Service) http.Handler {
 		}
 		notificacao, err := meuservico.Obter(id)
 		if err != nil {
+			w.Write([]byte("Não encontrada Notificação"))
 			w.WriteHeader(http.StatusNotFound)
 			w.Write(formatJSONError(err.Error()))
 			return

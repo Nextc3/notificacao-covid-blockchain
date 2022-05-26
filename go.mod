@@ -3,7 +3,6 @@ module github.com/Nextc3/notificacao-covid-blockchain
 go 1.15
 
 require (
-	github.com/Nextc3/notificacao-covid-blockchain v0.0.0-20220520033159-ae48b50a172d
 	github.com/gorilla/mux v1.8.0
 	github.com/hyperledger/fabric-chaincode-go v0.0.0-20220131132609-1476cf1d3206
 	github.com/hyperledger/fabric-contract-api-go v1.1.1

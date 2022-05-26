@@ -47,18 +47,14 @@ func (s *Servico) ObterTodos() ([]*entidade.Notificacao, error) {
 	return ns, nil
 
 }
+
+//Obter responde uma entidade solicitada, caso não exista retorna uma Notificação vazia
 func (s *Servico) Obter(id int) (entidade.Notificacao, error) {
-	log.Println("Obtendo Notificação")
-	var n *entidade.Notificacao
+	log.Println("Serviço implemetado: Obtendo Notificação")
 
-	var err error
-	*n, err = s.Contrato.ConsultarNotificacao(true, id)
-	if err != nil {
-		log.Println("Erro em obter Notificação")
-		return *n, err
-	}
+	n, err := s.Contrato.ConsultarNotificacao(true, id)
 
-	return *n, nil
+	return n, err
 
 }
 func (s *Servico) Salvar(n entidade.Notificacao) error {

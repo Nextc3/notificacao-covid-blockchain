@@ -16,7 +16,7 @@ type Contrato struct {
 	contrato *gateway.Contract
 }
 
-func (c *Contrato) SetContrato(g *gateway.Contract) {
+func (c Contrato) SetContrato(g *gateway.Contract) {
 	c.contrato = g
 }
 
@@ -57,6 +57,8 @@ func (c *Contrato) ExisteNotificacao(registrar bool, id int) string {
 	}
 	return string(result)
 }
+
+//ConsultarNotificacao retorna uma notificação se encontrada, caso contrário devolve notificação vazia
 func (c *Contrato) ConsultarNotificacao(registrar bool, id int) (entidade.Notificacao, error) {
 
 	log.Println("--> Transação ConsultarNotificacao, função retorna um ativo")
@@ -65,6 +67,14 @@ func (c *Contrato) ConsultarNotificacao(registrar bool, id int) (entidade.Notifi
 	var err error
 	idString := strconv.Itoa(id)
 	contract := c.contrato
+	deuCerto, err := strconv.ParseBool(c.ExisteNotificacao(registrar, id))
+	if err != nil {
+		log.Fatalf("Erro em converter String para Bool e saber se existe notificação")
+	}
+	if !deuCerto {
+		log.Println("Não foi encontrado Notificação buscada. Retornando Notificação vazia")
+		return c.obterVazia(), nil
+	}
 	if registrar {
 		fmt.Println("Você escolheu registrar transação")
 		nEmBytes, err = contract.SubmitTransaction("consultarNotificacao", idString)
@@ -101,6 +111,10 @@ func (c *Contrato) ObterTodasNotificacoes(registrar bool) ([]consulta.ResultadoC
 	return result, nil
 
 }
+func (c *Contrato) obterVazia() entidade.Notificacao {
+	return entidade.Notificacao{}
+
+}
 func (c *Contrato) InitLedger() {
 	contract := c.contrato
 	log.Println("--> Transação de Submit: InitLedger, função cria o conjunto inicial de ativos no razão. Para estudo")
@@ -111,22 +125,3 @@ func (c *Contrato) InitLedger() {
 		log.Fatalf("Falhou em InitLedger SUBMIT (altera estado da ledger) %v", err)
 	}
 }
-
-//Funções de configuração
-
-/* main
-log.Println("============ minha primeira aplicação em golang ============")
-
-	var conexao Conexao
-	var contrato Contrato
-	contrato.setContrato(conexao.iniciarConexao())
-	defer conexao.fecharConexao()
-	contrato.initLedger()
-
-	/*
-		Saudacao:  saudacao,
-		Despedida: despedida,
-		Oidenovo:  oidenovo,
-		Pessoa:	pessoa
-*/
-//log.Println("============ fim da minha primeira aplicação em golang ============")

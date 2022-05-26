@@ -141,7 +141,7 @@ func (c *ContratoInteligente) gerarObjetoTeste() (entidade.Notificacao, entidade
 }
 
 //Para saber a scruct que está sendo utilizada, por favor, veja no pacote Entidades
-
+//InitLedger já inicia a ledger com duas notificações
 func (c *ContratoInteligente) InitLedger(contexto contractapi.TransactionContextInterface) error {
 	//método inicial. Normalmente para inserir ativos de testes
 
@@ -193,7 +193,7 @@ func (c *ContratoInteligente) ConsultarNotificacao(contexto contractapi.Transact
 	return notificacao, nil
 }
 
-//Consulta se Oi existe
+//Consulta se Notificação existe
 func (s *ContratoInteligente) ExisteNotificacao(contexto contractapi.TransactionContextInterface, idNotificacao string) (bool, error) {
 	notificacaoEmBytes, err := contexto.GetStub().GetState("Notificacao" + idNotificacao)
 	if err != nil {
@@ -292,6 +292,8 @@ func main() {
 
 }
 
+//Caso seja necessário criação de um método de alteração das notificações
+//Nessa caso de exemplo um ativo chamado Oi é usada para armazenar
 /* Mudar notificação está fora do escopo desse trabalho
 o método abaixo ainda tá com corpo de teste
 // ChangeOiPessoa atualiza o campo Pessoa da Oi com id fornecido no estado mundial

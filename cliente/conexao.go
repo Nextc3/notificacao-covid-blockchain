@@ -31,7 +31,7 @@ func (c *Conexao) IniciarConexao() (*gateway.Contract, *gateway.Gateway) {
 	fmt.Println("Obtendo Wallet")
 	wallet, err := getWallet()
 	fmt.Println("Credenciando Wallet")
-	err = credenciarWallet(wallet)
+	w, err := credenciarWallet(wallet)
 
 	if err != nil {
 		log.Fatalf("Falhou em credenciar a Wallet %v", err)
@@ -40,20 +40,24 @@ func (c *Conexao) IniciarConexao() (*gateway.Contract, *gateway.Gateway) {
 	fmt.Println("Obtendo Caminho da Conexão Org1 em Yaml")
 	caminho := getCaminhoConexaoOrg1Yaml()
 	fmt.Println("Obtendo Gateway")
-	gw := getGateway(caminho, wallet)
+	gw := getGateway(caminho, w)
 
 	c.gateway = gw
 	//defer gw.Close()
 
 	fmt.Println("Obtendo a rede com o nome do canal do gateway")
-	network, err := gw.GetNetwork("mychannel")
+
+	network, err := c.gateway.GetNetwork("mychannel")
 	if err != nil {
+		fmt.Println("Verificando rede obtida")
+		fmt.Println(gw)
+		fmt.Println(network)
 		log.Fatalf("Falhou em pegar a network: %v", err)
 	}
 	fmt.Println("Obtendo contrato inteligente da rede/canal")
 	contrato := network.GetContract("contratointeligente")
 	fmt.Println("Retornando contrato inteligente")
-	return contrato, gw
+	return contrato, c.gateway
 
 }
 
@@ -76,6 +80,7 @@ func getGateway(caminho string, wallet *gateway.Wallet) *gateway.Gateway {
 func getCaminhoConexaoOrg1Yaml() string {
 	caminho := filepath.Join(
 		"..",
+		"..",
 		"test-network",
 		"organizations",
 		"peerOrganizations",
@@ -84,17 +89,19 @@ func getCaminhoConexaoOrg1Yaml() string {
 	)
 	return caminho
 }
-func credenciarWallet(wallet *gateway.Wallet) error {
+func credenciarWallet(wallet *gateway.Wallet) (*gateway.Wallet, error) {
 	fmt.Println("Credenciar Wallet")
-	if !wallet.Exists("appUser") {
-		err := populateWallet(wallet)
+	if wallet.Exists("appUser") {
+		w, err := populateWallet(wallet)
 		if err != nil {
 			log.Fatalf("Falhou em colocar credenciais na wallet: %v", err)
 		}
+		fmt.Println("Credenciou Wallet e Populando")
+		return w, err
 	}
 
 	fmt.Println("Credenciou Wallet")
-	return nil
+	return wallet, nil
 }
 func getWallet() (*gateway.Wallet, error) {
 	fmt.Println("Obtendo Wallet")
@@ -105,11 +112,12 @@ func getWallet() (*gateway.Wallet, error) {
 	fmt.Println("Função de obter wallet finalizada com sucesso")
 	return wallet, err
 }
-func populateWallet(wallet *gateway.Wallet) error {
+func populateWallet(wallet *gateway.Wallet) (*gateway.Wallet, error) {
 	log.Println("Método crucial para funcionamento: populando Wallet")
 	log.Println("============ Populating wallet ============")
 	log.Println("Obtendo credenciais")
 	credPath := filepath.Join(
+		"..",
 		"..",
 		"test-network",
 		"organizations",
@@ -124,29 +132,33 @@ func populateWallet(wallet *gateway.Wallet) error {
 	// read the certificate pem
 	cert, err := ioutil.ReadFile(filepath.Clean(certPath))
 	if err != nil {
-		return err
+		return nil, err
 	}
 	fmt.Println("pegou as credenciais em de cert.pem")
 	keyDir := filepath.Join(credPath, "keystore")
 	// there's a single file in this dir containing the private key
 	files, err := ioutil.ReadDir(keyDir)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	fmt.Println("pegou a chave")
 	if len(files) != 1 {
-		return fmt.Errorf("a pasta keystore deve conter um arquivo")
+		return nil, fmt.Errorf("a pasta keystore deve conter um arquivo")
 	}
 	keyPath := filepath.Join(keyDir, files[0].Name())
 	fmt.Println("pegou arquivo da chave")
 	fmt.Println(string(files[0].Name()))
 	key, err := ioutil.ReadFile(filepath.Clean(keyPath))
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	log.Println("Obtendo a identidade de Org1 junto com a chave")
 	identity := gateway.NewX509Identity("Org1MSP", string(cert), string(key))
 	fmt.Println("Registrando na Wallet a identidade de Org1 e usuário")
-	return wallet.Put("appUser", identity)
+
+	err = wallet.Put("appUser", identity)
+
+	return wallet, err
+
 }
