@@ -1,22 +1,36 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"github.com/Nextc3/notificacao-covid-blockchain/cliente"
+	"github.com/Nextc3/notificacao-covid-blockchain/entidade"
 	"github.com/Nextc3/notificacao-covid-blockchain/implementacaoservico"
-	"github.com/Nextc3/notificacao-covid-blockchain/web/handlers"
+	"github.com/Nextc3/notificacao-covid-blockchain/servico"
 	"log"
 	"net/http"
-	"os"
-	"time"
-
-	"github.com/gorilla/mux"
-	"github.com/urfave/negroni"
+	"strconv"
+	"strings"
 )
 
-func main() {
-	//Pra executar go run
-	//Main só pra costurar e compor coisas necessárias pra camada de negócio
+func enableCors(w *http.ResponseWriter) {
+	(*w).Header().Set("Access-Control-Allow-Origin", "*")
+}
+func formatJSONError(mensagem string) []byte {
+	appErro := struct {
+		Mensagem string `json:"mensagem"`
+	}{
+		mensagem,
+	}
+	response, err := json.Marshal(appErro)
+	if err != nil {
+		return []byte(err.Error())
+	}
+	return response
+}
+
+func NotificacaoHandler(w http.ResponseWriter, r *http.Request) {
+	enableCors(&w)
 	var conex cliente.Conexao
 	var contra cliente.Contrato
 	contratoGateway, gw := conex.IniciarConexao()
@@ -30,62 +44,83 @@ func main() {
 
 	meuservico := implementacaoservico.NewService(contra)
 
-	//roteador pra fazer controle de rotas
-	roteador := mux.NewRouter()
-	//Negroni: middlewares - código que vai ser executado em todas as requests.
-	//Empilhados para serem usados quando quiser em várias requisições
-	//aqui podemos colocar logs, inclusão e validação de cabeçalhos, etc
-	ngroni := negroni.New(
-		negroni.NewLogger(),
-	)
-	//handlers
-	handlers.CriarNotificacaoHandlers(roteador, ngroni, &meuservico)
-
-	/*
-		retorna um handler que atende solicitações HTTP com o conteúdo do sistema de
-		 arquivos enraizado na raiz.Como um caso especial, o servidor de arquivos
-		 retornado redireciona qualquer solicitação que termine em "/index.html"
-		  para o mesmo caminho, sem o "index.html" final.
-		  Para usar a implementação do sistema de arquivos do sistema operacional, é usado http.Dir:
-	*/
-	//fileServer := http.FileServer(http.Dir("./web/static"))
-	/*o método PathPrefix registra uma nova rota ("/static/")
-	Na nova rota criada setado um Http Handler (manipulador de requisições que a respondem)
-	o http handler em questão é retornado pela combinação de vários handlers feitos pelo negroni
-	com o método With(). O método With recebe conversão feita do Http Handlers em Negroni Handlers
-	pelo metódo Wrap(Com ele posso chamar funções e passar qualquer coisas pra essas funções
-		como por exemplo negroni.Wrap(funçãoQualquer(parâmetro))).
-	 O metódo Wrap recebe um Handler de StripPrefix
-	que atende a solicitações HTTP removendo o prefixo fornecido do caminho da URL da
-	solicitação  e invocando o manipulador handler h(no caso fileServer).
-	Methods:  adiciona um conexão para métodos HTTP. Caso não seja colocado retorna 404
-	*/
+	//-------
 	//
-	/*
-		roteador.PathPrefix("/static/").Handler(ngroni.With(
-			negroni.Wrap(http.StripPrefix("/static/", fileServer)),
-		)).Methods("GET", "OPTIONS")
 
-	*/
-	//Para ser verificado de tempos em tempos nas clouds
-	roteador.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		// used to health check, will return 200
-	})
+	sid := strings.TrimPrefix(r.URL.Path, "/notificacao/")
+	id, _ := strconv.Atoi(sid)
 
-	//Tudo que vier da raiz vou tratar com o roteador criado
-	http.Handle("/", roteador)
-	//criando um servidor http
-	//Usa goroutines pra cada requisição que chegar
-	srv := &http.Server{
-		ReadTimeout:  30 * time.Second,
-		WriteTimeout: 30 * time.Second,
-		Addr:         ":8080",                                        //porta que o servidor http está setado
-		Handler:      http.DefaultServeMux,                           //raiz criada no http.Handle()
-		ErrorLog:     log.New(os.Stderr, "logger: ", log.Lshortfile), //log como saída de erro padrão no terminal
+	switch {
+	case r.Method == "GET" && id > 0:
+		obterNotificacao(w, r, id, &meuservico)
+	case r.Method == "GET":
+		obterTodasNotificacoes(w, r, &meuservico)
+	case r.Method == "POST" && id > 0:
+		salvarNotificacao(w, r, &meuservico)
+	default:
+		w.WriteHeader(http.StatusNotFound)
+		fmt.Fprintf(w, "Desculpa... :(")
 	}
-	err := srv.ListenAndServe()
+}
+
+func obterNotificacao(w http.ResponseWriter, r *http.Request, id int, meuservico servico.Service) {
+	//enableCors(&w)
+
+	var n entidade.Notificacao
+	n, err := meuservico.Obter(id)
 	if err != nil {
-		log.Fatal(err)
+		w.Write([]byte("Não encontrada Notificação"))
+		w.WriteHeader(http.StatusNotFound)
+		w.Write(formatJSONError(err.Error()))
+		return
 	}
+	json, _ := json.Marshal(n)
+
+	w.Header().Set("Content-Type", "application/json")
+	fmt.Fprint(w, string(json))
+
+}
+func obterTodasNotificacoes(w http.ResponseWriter, r *http.Request, meuservico servico.Service) {
+	todos, err := meuservico.ObterTodos()
+	if err != nil {
+		//passa um erro como resposta. Sinaliza também no cabeçalho
+		w.WriteHeader(http.StatusInternalServerError)
+		w.Write([]byte(err.Error()))
+
+		return
+	}
+
+	json, _ := json.Marshal(todos)
+
+	w.Header().Set("Content-Type", "application/json")
+	fmt.Fprint(w, string(json))
+
+}
+func salvarNotificacao(w http.ResponseWriter, r *http.Request, meuservico servico.Service) {
+	w.Header().Set("Content-Type", "application/json")
+
+	//vamos pegar os dados enviados pelo usuário via body
+	var notificacao entidade.Notificacao
+	err := json.NewDecoder(r.Body).Decode(&notificacao)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		w.Write(formatJSONError(err.Error()))
+		return
+	}
+
+	err = meuservico.Salvar(notificacao)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		w.Write(formatJSONError(err.Error()))
+		return
+	}
+	w.WriteHeader(http.StatusCreated)
+}
+
+func main() {
+
+	http.HandleFunc("/notificacao/", NotificacaoHandler)
+	log.Println("Executando meu NotificaAPI repaginado...")
+	log.Fatal(http.ListenAndServe(":8080", nil))
 
 }

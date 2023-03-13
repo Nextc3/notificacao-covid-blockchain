@@ -4,12 +4,14 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fb348a41-07d3-4f07-ba2d-2c347370ebcc" name="Changes" comment="Funcionando menos api">
+    <list default="true" id="fb348a41-07d3-4f07-ba2d-2c347370ebcc" name="Changes" comment="Funcionando tudo">
+      <change afterPath="$PROJECT_DIR$/web/notificaapi_backup.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cliente/conexao.go" beforeDir="false" afterPath="$PROJECT_DIR$/cliente/conexao.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cliente/contrato.go" beforeDir="false" afterPath="$PROJECT_DIR$/cliente/contrato.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/implementacaoservico/servicoblockchain.go" beforeDir="false" afterPath="$PROJECT_DIR$/implementacaoservico/servicoblockchain.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/handlers/notificacao.go" beforeDir="false" afterPath="$PROJECT_DIR$/web/handlers/notificacao.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chaincode/contratointeligente.go" beforeDir="false" afterPath="$PROJECT_DIR$/chaincode/contratointeligente.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entidade/notificacao.go" beforeDir="false" afterPath="$PROJECT_DIR$/entidade/notificacao.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entidade/notificador.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/entidade/testecovid.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web/notificaapi.go" beforeDir="false" afterPath="$PROJECT_DIR$/web/notificaapi.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -20,9 +22,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Go File" />
-        <option value="Go Application" />
         <option value="HTTP Public Environment File" />
+        <option value="Go Application" />
+        <option value="Go File" />
       </list>
     </option>
   </component>
@@ -44,27 +46,34 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.format.on.save.advertiser.fired&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.formatter.settings.were.checked&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.migrated.go.modules.settings&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.modules.go.list.on.any.changes.was.set&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.vendoring.notification.had.been.shown&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.watchers.conflict.with.on.save.actions.check.performed&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;go.import.settings.migrated&quot;: &quot;true&quot;,
-    &quot;go.sdk.automatically.set&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/caio/go/src/github.com/Nextc3/fabric-samples&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "DefaultGoTemplateProperty": "Go File",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.go.format.on.save.advertiser.fired": "true",
+    "RunOnceActivity.go.formatter.settings.were.checked": "true",
+    "RunOnceActivity.go.migrated.go.modules.settings": "true",
+    "RunOnceActivity.go.modules.go.list.on.any.changes.was.set": "true",
+    "RunOnceActivity.go.vendoring.notification.had.been.shown": "true",
+    "RunOnceActivity.go.watchers.conflict.with.on.save.actions.check.performed": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "go.import.settings.migrated": "true",
+    "go.sdk.automatically.set": "true",
+    "last_opened_file_path": "/home/caio/go/src/github.com/Nextc3/fabric-samples/notificacao-covid-blockchain/web",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "reference.settingsdialog.IDE.editor.colors.Language Defaults"
   }
-}</component>
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/web" />
+    </key>
+  </component>
   <component name="RunManager" selected="HTTP Request.rest-api_2 | #1">
     <configuration default="true" type="GoApplicationRunConfiguration" factoryName="Go Application">
       <module name="notificacao-covid-blockchain" />
@@ -134,7 +143,8 @@
     <MESSAGE value="Corrigindo service.go com novo pacote servico" />
     <MESSAGE value="Ajeitando README.md" />
     <MESSAGE value="Funcionando menos api" />
-    <option name="LAST_COMMIT_MESSAGE" value="Funcionando menos api" />
+    <MESSAGE value="Funcionando tudo" />
+    <option name="LAST_COMMIT_MESSAGE" value="Funcionando tudo" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>
