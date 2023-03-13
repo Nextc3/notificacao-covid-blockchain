@@ -4,16 +4,7 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fb348a41-07d3-4f07-ba2d-2c347370ebcc" name="Changes" comment="Funcionando tudo">
-      <change afterPath="$PROJECT_DIR$/web/notificaapi_backup.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/chaincode/contratointeligente.go" beforeDir="false" afterPath="$PROJECT_DIR$/chaincode/contratointeligente.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/entidade/notificacao.go" beforeDir="false" afterPath="$PROJECT_DIR$/entidade/notificacao.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/entidade/notificador.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/entidade/testecovid.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/notificaapi.go" beforeDir="false" afterPath="$PROJECT_DIR$/web/notificaapi.go" afterDir="false" />
-    </list>
+    <list default="true" id="fb348a41-07d3-4f07-ba2d-2c347370ebcc" name="Changes" comment="Deixando só notificacao.go e deletando testecovid.go e notificador.go" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -60,7 +51,7 @@
     "WebServerToolWindowFactoryState": "false",
     "go.import.settings.migrated": "true",
     "go.sdk.automatically.set": "true",
-    "last_opened_file_path": "/home/caio/go/src/github.com/Nextc3/fabric-samples/notificacao-covid-blockchain/web",
+    "last_opened_file_path": "/home/caio/go/src/github.com/Nextc3/fabric-samples/notificacao-covid-blockchain/chaincode",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -71,6 +62,7 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/chaincode" />
       <recent name="$PROJECT_DIR$/web" />
     </key>
   </component>
@@ -144,7 +136,8 @@
     <MESSAGE value="Ajeitando README.md" />
     <MESSAGE value="Funcionando menos api" />
     <MESSAGE value="Funcionando tudo" />
-    <option name="LAST_COMMIT_MESSAGE" value="Funcionando tudo" />
+    <MESSAGE value="Deixando só notificacao.go e deletando testecovid.go e notificador.go" />
+    <option name="LAST_COMMIT_MESSAGE" value="Deixando só notificacao.go e deletando testecovid.go e notificador.go" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>
