@@ -55,7 +55,7 @@ func NotificacaoHandler(w http.ResponseWriter, r *http.Request) {
 		obterNotificacao(w, r, id, &meuservico)
 	case r.Method == "GET":
 		obterTodasNotificacoes(w, r, &meuservico)
-	case r.Method == "POST" && id > 0:
+	case r.Method == "POST":
 		salvarNotificacao(w, r, &meuservico)
 	default:
 		w.WriteHeader(http.StatusNotFound)
