@@ -25,6 +25,15 @@ func (c *Contrato) SetContrato(g *gateway.Contract) {
 func (c *Contrato) CriarNotificacao(n entidade.Notificacao) {
 	log.Println("--> Transação de Submit: CriarNotificacao, cria ativos do tipo Notificacao")
 	contract := c.contrato
+
+	resultado, err := contract.EvaluateTransaction("getUltimoId")
+	if err != nil {
+		log.Println("erro em buscar o último Id")
+	}
+	aux, _ := strconv.Atoi(string(resultado))
+	aux++
+	n.Id = aux
+
 	nEmBytes, _ := json.Marshal(n)
 	nString := string(nEmBytes)
 	result, err := contract.SubmitTransaction("criarNotificacao", nString)

@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/Nextc3/notificacao-covid-blockchain/cliente"
 	"github.com/Nextc3/notificacao-covid-blockchain/entidade"
+
 	"github.com/Nextc3/notificacao-covid-blockchain/implementacaoservico"
 	"github.com/Nextc3/notificacao-covid-blockchain/servico"
 	"log"
@@ -12,6 +13,8 @@ import (
 	"strconv"
 	"strings"
 )
+
+//var meuservico implementacaoservico.Servico
 
 func enableCors(w *http.ResponseWriter) {
 	(*w).Header().Set("Access-Control-Allow-Origin", "*")
@@ -30,7 +33,7 @@ func formatJSONError(mensagem string) []byte {
 }
 
 func NotificacaoHandler(w http.ResponseWriter, r *http.Request) {
-	enableCors(&w)
+	//enableCors(&w)
 	var conex cliente.Conexao
 	var contra cliente.Contrato
 	contratoGateway, gw := conex.IniciarConexao()
@@ -43,6 +46,13 @@ func NotificacaoHandler(w http.ResponseWriter, r *http.Request) {
 	contra.SetContrato(contratoGateway)
 
 	meuservico := implementacaoservico.NewService(contra)
+	header := w.Header()
+	header.Add("Access-Control-Allow-Origin", "*")
+	header.Add("Access-Control-Allow-Headers", "*")
+	if r.Method == "OPTIONS" {
+		w.WriteHeader(http.StatusOK)
+
+	}
 
 	//-------
 	//
@@ -101,6 +111,7 @@ func salvarNotificacao(w http.ResponseWriter, r *http.Request, meuservico servic
 
 	//vamos pegar os dados enviados pelo usuário via body
 	var notificacao entidade.Notificacao
+
 	err := json.NewDecoder(r.Body).Decode(&notificacao)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)

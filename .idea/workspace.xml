@@ -4,10 +4,12 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fb348a41-07d3-4f07-ba2d-2c347370ebcc" name="Changes" comment="Deixando só notificacao.go e deletando testecovid.go e notificador.go">
+    <list default="true" id="fb348a41-07d3-4f07-ba2d-2c347370ebcc" name="Changes" comment="Simplificando notificacao e suas referencias">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/chaincode/contratointeligente.go" beforeDir="false" afterPath="$PROJECT_DIR$/chaincode/contratointeligente.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cliente/contrato.go" beforeDir="false" afterPath="$PROJECT_DIR$/cliente/contrato.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/entidade/notificacao.go" beforeDir="false" afterPath="$PROJECT_DIR$/entidade/notificacao.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web/notificaapi.go" beforeDir="false" afterPath="$PROJECT_DIR$/web/notificaapi.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -56,7 +58,7 @@
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;go.import.settings.migrated&quot;: &quot;true&quot;,
     &quot;go.sdk.automatically.set&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/caio/go/src/github.com/Nextc3/fabric-samples/test-network&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/caio/go/src/github.com/Nextc3/fabric-samples/notificacao-covid-blockchain&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -67,6 +69,7 @@
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/chaincode" />
       <recent name="$PROJECT_DIR$/web" />
     </key>
@@ -142,7 +145,8 @@
     <MESSAGE value="Funcionando menos api" />
     <MESSAGE value="Funcionando tudo" />
     <MESSAGE value="Deixando só notificacao.go e deletando testecovid.go e notificador.go" />
-    <option name="LAST_COMMIT_MESSAGE" value="Deixando só notificacao.go e deletando testecovid.go e notificador.go" />
+    <MESSAGE value="Simplificando notificacao e suas referencias" />
+    <option name="LAST_COMMIT_MESSAGE" value="Simplificando notificacao e suas referencias" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>

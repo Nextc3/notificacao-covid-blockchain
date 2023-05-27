@@ -16,10 +16,13 @@ type ContratoInteligente struct {
 	contractapi.Contract
 }
 
+var ultimoId int
+
 //gerarObjetoTeste retorna dois objetos com valores de teste sendo que o segundo pode ser ignorado
 func (c *ContratoInteligente) gerarObjetoTeste() (entidade.Notificacao, entidade.Notificacao) {
+	ultimoId++
 	n1 := entidade.Notificacao{
-		Id:   1,
+		Id:   ultimoId,
 		Cpf:  "987.654.321-09",
 		Nome: "Natasha Caldeirão",
 
@@ -61,8 +64,9 @@ func (c *ContratoInteligente) gerarObjetoTeste() (entidade.Notificacao, entidade
 		*/
 	}
 	//Segundo objeto de teste
+	ultimoId++
 	n2 := entidade.Notificacao{
-		Id:   2,
+		Id:   ultimoId,
 		Cpf:  "123.789.321-09",
 		Nome: "Mirela da Porrada",
 		/*
@@ -107,8 +111,13 @@ func (c *ContratoInteligente) gerarObjetoTeste() (entidade.Notificacao, entidade
 
 }
 
+func (c *ContratoInteligente) GetUltimoId() int {
+	return ultimoId
+}
+
 //Para saber a scruct que está sendo utilizada, por favor, veja no pacote Entidades
 //InitLedger já inicia a ledger com duas notificações
+/*
 func (c *ContratoInteligente) InitLedger(contexto contractapi.TransactionContextInterface) error {
 	//método inicial. Normalmente para inserir ativos de testes
 
@@ -124,7 +133,7 @@ func (c *ContratoInteligente) InitLedger(contexto contractapi.TransactionContext
 	return c.CriarNotificacao(contexto, string(noti1))
 
 }
-
+*/
 //Cria notificação
 func (c *ContratoInteligente) CriarNotificacao(contexto contractapi.TransactionContextInterface, notificacao string) error {
 
@@ -198,8 +207,9 @@ func (c *ContratoInteligente) ObterTodasNotificacoes(contexto contractapi.Transa
 	}(resultadoIteracao)
 
 	results := []*consulta.ResultadoConsulta{}
-
+	ultimoId = 0
 	for resultadoIteracao.HasNext() {
+		ultimoId++
 		queryResponse, err := resultadoIteracao.Next()
 
 		if err != nil {
