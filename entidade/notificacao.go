@@ -2,12 +2,14 @@ package entidade
 
 type Notificacao struct {
 	Id                  int    `json:"id"`
-	Cpf                 string `json:"cpf"`
-	Nome                string `json:"nome"`
 	DataNascimento      string `json:"dataNascimento"`
 	Sexo                string `json:"sexo"`
-	Localidade          string `json:"localidade"`
-	Doenca              string `json:"doença"`
+	Endereco            string `json:"endereco"`
+	Bairro              string `json:"bairro"`
+	Cidade              string `json:"cidade"`
+	Estado              string `json:"estado"`
+	Pais                string `json:"pais"`
+	Doenca              string `json:"doenca"`
 	DataInicioSintomas  string `json:"dataInicioSintomas"`
 	DataDiagnostico     string `json:"dataDiagnostico"`
 	DataNotificacao     string `json:"dataNotificacao"`
